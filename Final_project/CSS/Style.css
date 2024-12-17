@@ -1,0 +1,114 @@
+
+#nav_bg{
+    background-color: rgb(24,54,81);
+}
+
+
+#bs-carousel .carousel-inner img {
+    height: 800px;
+    object-fit: cover;
+    width: 100%;
+}
+#logo{
+    height: 50px; 
+    width: 50px;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 04px;
+}
+
+#castle_svg{
+    height: 50px; 
+    width: 50px;
+    margin-bottom: 20px;
+    filter: invert(1) brightness(0.85);
+}
+
+#carousel_titles{
+    font-size: 25px;
+}
+
+#footer_bg{
+    background-color: rgb(24,54,81);
+}
+
+#carousel_fade{
+    height: max-content;
+    mask-image: linear-gradient(black 70%, transparent);
+
+}
+
+
+.fadeInUp{
+    -webkit-animation: fadeInUp 1.2s both;
+    animation: fadeInUp 1.2s both;
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+@-webkit-keyframes fadeInUp {
+    0%{
+        opacity: 0;
+        -webkit-transform: translatey(100px);
+    }
+    100%{
+        opacity: 1;
+        -webkit-transform: translatey(0px);
+    }
+}
+
+@keyframes fadeInUp {
+    0%{
+        opacity: 0;
+        transform: translatey(100px);
+    }
+    100%{
+        opacity: 1;
+        transform: translatey(0px);
+    }
+}
+
+
+
+.fadeInLeft{
+    -webkit-animation: fadeInLeft 1.1s both;
+    animation: fadeInLeft 1.1s both;
+}
+
+@-webkit-keyframes fadeInLeft {
+    0%{
+        opacity: 0;
+        -webkit-transform: translateX(-100px);
+    }
+    100%{
+        opacity: 1;
+        -webkit-transform: translateX(0px);
+    }
+}
+
+@keyframes fadeInLeft {
+    0%{
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+
+#previsao tbody {
+    padding: 4px; /* Adjust this value as needed */
+}
+
+input[type="checkbox"]:checked {
+    background-color: rgb(24,54,81);
+    border: 1px solid rgb(24,54,81);
+  }
