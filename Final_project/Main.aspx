@@ -3,4 +3,5 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:DataList ID="DataList1" runat="server"></asp:DataList>
+    <a href="Gestao/Users_test.aspx">click here</a>
 </asp:Content>

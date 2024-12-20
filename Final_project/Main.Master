@@ -33,7 +33,7 @@
             <!-- SVG -->
             <a class="navbar-brand d-flex align-items-center">
                 <img src="Imagens/Logos/castle.svg" alt="castle_svg" id="castle_svg" class="d-inline-block align-center">
-                <a href="Main.html" class="text-white", style="margin-left: 10px; margin-bottom: 3px; margin-right: 5px; font-size: 23px; text-decoration: none;">Aldeias históricas</a>
+                <a href="Main.aspx" class="text-white", style="margin-left: 10px; margin-bottom: 3px; margin-right: 5px; font-size: 23px; text-decoration: none;">Aldeias históricas</a>
             </a>
 
             <!-- Collapse button -->
@@ -47,7 +47,7 @@
                     <a class="nav-link text-white" href="login.aspx" data-bs-toggle="modal"data-bs-target="#modalExample">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="Registo.html">Registar</a>
+                    <a class="nav-link text-white" href="create_account.aspx">Registar</a>
                 </li>
                 </ul>
                 

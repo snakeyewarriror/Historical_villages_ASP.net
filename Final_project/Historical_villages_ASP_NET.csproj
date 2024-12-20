@@ -92,6 +92,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="create_account.aspx" />
     <Content Include="Global.asax" />
     <Content Include="login.aspx" />
     <Content Include="Main.aspx" />
@@ -129,9 +130,19 @@
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+    <Content Include="Utilizadores\Add_local.aspx" />
+    <Content Include="Utilizadores\Edit_local.aspx" />
+    <Content Include="Utilizadores\Personal_area.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="create_account.aspx.cs">
+      <DependentUpon>create_account.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="create_account.aspx.designer.cs">
+      <DependentUpon>create_account.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -157,11 +168,33 @@
       <DependentUpon>Main.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilizadores\Add_local.aspx.cs">
+      <DependentUpon>Add_local.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Utilizadores\Add_local.aspx.designer.cs">
+      <DependentUpon>Add_local.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Utilizadores\Edit_local.aspx.cs">
+      <DependentUpon>Edit_local.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Utilizadores\Edit_local.aspx.designer.cs">
+      <DependentUpon>Edit_local.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Utilizadores\Personal_area.aspx.cs">
+      <DependentUpon>Personal_area.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Utilizadores\Personal_area.aspx.designer.cs">
+      <DependentUpon>Personal_area.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
+    <Content Include="Utilizadores\Web_users.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -172,7 +205,6 @@
   <ItemGroup>
     <Folder Include="CSS\" />
     <Folder Include="Imagens\" />
-    <Folder Include="Utilizadores\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
