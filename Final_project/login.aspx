@@ -2,8 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Login ID="Login1" runat="server"
+    <asp:Login ID="loginUser" runat="server"
         CreateUserText="Criar conta"
         CreateUserUrl="~/create_account.aspx" 
-        DestinationPageUrl="Main.aspx"></asp:Login>
+        DestinationPageUrl="Main.aspx" OnLoggedIn="loginUtilizador_LoggedIn"></asp:Login>
 </asp:Content>

@@ -33,6 +33,15 @@ namespace Final_project
         protected global::System.Web.UI.WebControls.TextBox TextBoxNome;
 
         /// <summary>
+        /// TextBoxUsername control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBoxUsername;
+
+        /// <summary>
         /// TextBoxEmail control.
         /// </summary>
         /// <remarks>
@@ -51,15 +60,6 @@ namespace Final_project
         protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator3;
 
         /// <summary>
-        /// TextBoxUserName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBoxUserName;
-
-        /// <summary>
         /// TextBoxDate control.
         /// </summary>
         /// <remarks>
@@ -69,13 +69,13 @@ namespace Final_project
         protected global::System.Web.UI.WebControls.TextBox TextBoxDate;
 
         /// <summary>
-        /// CompareValidatorDate control.
+        /// validarDataNascimento control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator CompareValidatorDate;
+        protected global::System.Web.UI.WebControls.CompareValidator validarDataNascimento;
 
         /// <summary>
         /// TextBoxPassword control.
@@ -105,12 +105,21 @@ namespace Final_project
         protected global::System.Web.UI.WebControls.TextBox TextBoxPasswordConfirmation;
 
         /// <summary>
-        /// RegularExpressionValidator4 control.
+        /// CompareValidatorPasswords control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator4;
+        protected global::System.Web.UI.WebControls.CompareValidator CompareValidatorPasswords;
+
+        /// <summary>
+        /// ButtonSubmit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ButtonSubmit;
     }
 }

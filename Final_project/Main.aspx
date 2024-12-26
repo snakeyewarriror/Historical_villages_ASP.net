@@ -3,5 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:DataList ID="DataList1" runat="server"></asp:DataList>
-    <a href="Gestao/Users_test.aspx">click here</a>
+    <a href="Utilizadores/Personal_area.aspx">click here</a>
+    <asp:LoginStatus ID="LoginStatus1" runat="server" />
+    <asp:LoginView ID="LoginView1" runat="server"></asp:LoginView>
 </asp:Content>
