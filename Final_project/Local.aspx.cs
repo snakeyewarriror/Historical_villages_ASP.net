@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -7,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace Final_project
 {
-    public partial class Main1 : System.Web.UI.Page
+    public partial class Local : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -92,8 +92,9 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="create_account.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Local.aspx" />
     <Content Include="login.aspx" />
-    <Content Include="Main.aspx" />
+    <Content Include="Main_page.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -128,6 +129,7 @@
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+    <Content Include="Search.aspx" />
     <Content Include="Utilizadores\Add_local.aspx" />
     <Content Include="Utilizadores\Edit_local.aspx" />
     <Content Include="Utilizadores\Personal_area.aspx" />
@@ -144,19 +146,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Local.aspx.cs">
+      <DependentUpon>Local.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Local.aspx.designer.cs">
+      <DependentUpon>Local.aspx</DependentUpon>
+    </Compile>
     <Compile Include="login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Main.aspx.cs">
-      <DependentUpon>Main.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Main.aspx.designer.cs">
-      <DependentUpon>Main.aspx</DependentUpon>
     </Compile>
     <Compile Include="Main.Master.cs">
       <DependentUpon>Main.Master</DependentUpon>
@@ -165,7 +167,21 @@
     <Compile Include="Main.Master.designer.cs">
       <DependentUpon>Main.Master</DependentUpon>
     </Compile>
+    <Compile Include="Main_page.aspx.cs">
+      <DependentUpon>Main_page.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Main_page.aspx.designer.cs">
+      <DependentUpon>Main_page.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search.aspx.cs">
+      <DependentUpon>Search.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Search.aspx.designer.cs">
+      <DependentUpon>Search.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Utilizadores\Add_local.aspx.cs">
       <DependentUpon>Add_local.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
