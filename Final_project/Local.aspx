@@ -38,7 +38,7 @@
             <section class="row" style="margin-top: 180px;" id="container_text"> 
             <div class="col-5 container_text_inside">
                 <h3> 
-                    Almeida terá tido origem na migração dos habitantes de um castro lusitano, localizado a Norte do lugar do Enxido da Sarça, ocupado em 61 a.C. pelos Romanos, e depois pelos povos bárbaros. Dada a sua situação em planalto, os Árabes chamaram-na Al-Mêda (a Mesa), Talmeyda ou Almeydan, tendo construído um pequeno Castelo (séc. VIII- IX).
+                    TODO
                 </h3>
                 <br/><br/>
                 <img class="d-block w-100" src="Imagens/Aldeias/almeida/almeida5.jpg" alt="Imagen almeida">

@@ -19,7 +19,7 @@ namespace Final_project
         {
             FormsAuthentication.SignOut();
             Session.Clear();
-            Response.Redirect("~/Main.aspx");
+            Response.Redirect("~/Main_page.aspx");
         }
 
     }

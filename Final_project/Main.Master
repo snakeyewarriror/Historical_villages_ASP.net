@@ -57,7 +57,7 @@
                         <AnonymousTemplate>
                             <ul class="navbar-nav ms-auto" style="font-size: 20px;">
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="../login.aspx" data-bs-toggle="modal" data-bs-target="#modalExample">Login</a>
+                                    <a class="nav-link text-white" href="login.aspx">Login</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="../create_account.aspx">Registar</a>
@@ -92,7 +92,7 @@
             <footer class="row text-center mt-5" id="footer_bg">
   
                 <ul class="nav justify-content-center mt-1">
-                    <li class="nav-item"> <a href="../Main.aspx" class="nav-link px-2 text-white">Home</a></li>
+                    <li class="nav-item"> <a href="../Main_page.aspx" class="nav-link px-2 text-white">Home</a></li>
                     <li class="nav-item"> <a href="#" class="nav-link px-2 text-white">Features</a></li>
                     <li class="nav-item"> <a href="#" class="nav-link px-2 text-white">Go back up</a></li>
                     <li class="nav-item"> <a href="#" class="nav-link px-2 text-white">FAQs</a></li>

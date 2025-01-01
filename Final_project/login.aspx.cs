@@ -46,7 +46,7 @@ namespace Final_project
             }
 
             Session["id_utilizador"] = id;
-            Response.Redirect("~/Main.aspx");
+            Response.Redirect("~/Main_page.aspx");
         }
     }
 }

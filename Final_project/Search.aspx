@@ -13,7 +13,7 @@
             <asp:DropDownList ID="listDistrito" runat="server" AutoPostBack="true" OnSelectedIndexChanged="listDistrito_SelectedIndexChanged" style="width: 200px;"></asp:DropDownList>
 
             <label for="listConcelho" style="min-width: 70px;  margin-left: 10px"">Concelho</label>
-            <asp:DropDownList ID="listConcelho" runat="server" style="width: 200px;"></asp:DropDownList>
+            <asp:DropDownList ID="listConcelho" runat="server" style="width: 250px;"></asp:DropDownList>
 
              
             <label for="textNome" style="min-width: 60px; margin-left: 40px">Nome</label>

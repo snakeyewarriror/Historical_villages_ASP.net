@@ -36,6 +36,8 @@ namespace Final_project
         {
             if (!IsPostBack)
             {
+
+                listConcelho.Items.Insert(0, "Escolha um Distrito primeiro");
                 GetLocais();
                 LoadDistritos();
                 ViewState["contador"] = 0;

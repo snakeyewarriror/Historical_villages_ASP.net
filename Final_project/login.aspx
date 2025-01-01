@@ -5,5 +5,5 @@
     <asp:Login ID="loginUser" runat="server"
         CreateUserText="Criar conta"
         CreateUserUrl="~/create_account.aspx" 
-        DestinationPageUrl="Main.aspx" OnLoggedIn="loginUtilizador_LoggedIn"></asp:Login>
+        DestinationPageUrl="~/Main_page.aspx" OnLoggedIn="loginUtilizador_LoggedIn"></asp:Login>
 </asp:Content>
