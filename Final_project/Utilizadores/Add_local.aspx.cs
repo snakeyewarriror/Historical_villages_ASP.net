@@ -329,14 +329,16 @@ namespace Final_project.Utilizadores
                 commandFotos.CommandText = "SELECT Ficheiro FROM Foto WHERE Local = @local";
                 commandFotos.Parameters.AddWithValue("@local", ViewState["idLocal"]);
 
+                Response.Write("Current idLocal: " + ViewState["idLocal"]?.ToString());
+
                 connection.Open();
                 SqlDataReader reader = commandFotos.ExecuteReader();
                 while (reader.Read())
                 {
-                    string ficheiro = Server.MapPath("../" + reader[0].ToString());
+                    string file = Server.MapPath("../" + reader[0].ToString());
                     //eliminar ficheiros
-                    if (File.Exists(ficheiro))
-                        File.Delete(ficheiro);
+                    if (File.Exists(file))
+                        File.Delete(file);
                 }
                 reader.Close();
 
@@ -345,10 +347,20 @@ namespace Final_project.Utilizadores
                 commandLocal.Connection = connection;
                 commandLocal.CommandText = "LocalEliminar";
                 commandLocal.CommandType = CommandType.StoredProcedure;
-                Response.Write("Current idLocal: " + ViewState["idLocal"]?.ToString());
-                commandLocal.Parameters.AddWithValue("@local", ViewState["idLocal"]);
-                commandLocal.ExecuteNonQuery();
-                ViewState["idLocal"] = null;
+                
+                
+                if (ViewState["idLocal"] == null)
+                {
+                    Response.Write("Error: idLocal is null");
+                    return;
+                }
+                else
+                {
+                    Response.Write("Current idLocal: " + ViewState["idLocal"]?.ToString());
+                    commandLocal.Parameters.AddWithValue("@idlocal", ViewState["idLocal"]);
+                    commandLocal.ExecuteNonQuery();
+                    ViewState["idLocal"] = null;
+                }
             }
         }
 
