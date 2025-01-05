@@ -97,6 +97,7 @@ namespace Final_project
                 command += " WHERE ";
                 if (!string.IsNullOrWhiteSpace(textNome.Text))
                 {
+
                     command += "L.Nome LIKE @Nome";
                     parameters.Add(new SqlParameter("@Nome", "%" + textNome.Text.Trim() + "%"));
                 }
@@ -106,7 +107,8 @@ namespace Final_project
                     command += "D.Id = @DistritoId";
                     parameters.Add(new SqlParameter("@DistritoId", listDistrito.SelectedValue));
                 }
-                if (!string.IsNullOrEmpty(listConcelho.SelectedValue) && listConcelho.SelectedValue != "Selecione um Concelho")
+                if (!string.IsNullOrEmpty(listConcelho.SelectedValue) && (listConcelho.SelectedValue != "Selecione um Concelho" &&
+                    listConcelho.SelectedValue != "Escolha um Distrito primeiro"))
                 {
                     if (parameters.Count > 0) command += " AND ";
                     command += "C.Id = @ConcelhoId";

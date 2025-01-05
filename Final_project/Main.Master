@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="CSS/Style.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.2.0/dist/css/coreui.min.css" rel="stylesheet" integrity="sha384-u3h5SFn5baVOWbh8UkOrAaLXttgSF0vXI15ODtCSxl0v/VKivnCN6iHCcvlyTL7L" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"> </script>
     <asp:ContentPlaceHolder ID="head" runat="server"> 
     </asp:ContentPlaceHolder> 
@@ -65,10 +66,13 @@
                             </ul>
                         </AnonymousTemplate>
 
+
+                        <%-- Logout button --%>
+
                         <LoggedInTemplate>
                             <ul class="navbar-nav ms-auto" style="font-size: 20px;">
                                 <li class="nav-item">
-                                    <asp:LinkButton runat="server" class="nav-link text-white" OnClick="LogoutButton_Click">Logout</asp:LinkButton>
+                                    <asp:LinkButton runat="server" class="nav-link text-white" CausesValidation="false" OnClick="LogoutButton_Click">Logout</asp:LinkButton>
                                 </li>
                             </ul>
                         </LoggedInTemplate>
@@ -106,7 +110,7 @@
         </div>
         
     <script src="Javascript/Script.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.2.0/dist/js/coreui.bundle.min.js" integrity="sha384-JdRP5GRWP6APhoVS1OM/pOKMWe7q9q8hpl+J2nhCfVJKoS+yzGtELC5REIYKrymn" crossorigin="anonymous"></script>
     </form>
 </body>
 </html>

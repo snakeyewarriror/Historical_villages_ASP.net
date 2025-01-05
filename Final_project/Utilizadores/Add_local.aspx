@@ -6,6 +6,7 @@
     <asp:Label ID="Label1" runat="server" Text="Criar Local"></asp:Label>
 
     Nome<asp:TextBox ID="text_name" runat="server"></asp:TextBox>
+    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="text_name" runat="server" Display="Dynamic" ForeColor="#CC0000" />
 
     Descrição<asp:TextBox ID="text_description" runat="server"></asp:TextBox>
 
@@ -14,15 +15,20 @@
     Localidade<asp:TextBox ID="text_town" runat="server"></asp:TextBox>
 
     Distrito<asp:DropDownList ID="list_district" runat="server" AutoPostBack="true" OnSelectedIndexChanged="listDistrito_SelectedIndexChanged" style="width: 200px;"></asp:DropDownList>
+    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="list_district" InitialValue="Selecione um Distrito"
+        runat="server" Display="Dynamic" ForeColor="#CC0000" />
+    <br />
 
     Concelho<asp:DropDownList ID="list_council" runat="server" style="width: 250px;"></asp:DropDownList>
+    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="list_council" InitialValue="Selecione um Concelho"
+        runat="server" Display="Dynamic" ForeColor="#CC0000" />
 
     <br />
     <br />
 
     <asp:Button ID="save_button" runat="server" class="btn-dark" Text="Guardar"  style="padding: 5px 15px;" OnClick="button_save_local"/>
 
-    <asp:Button ID="cancel_button" runat="server" class="btn-dark" Text="Cancelar"  style="padding: 5px 15px;" />
+    <asp:Button ID="cancel_button" runat="server" class="btn-dark" Text="Cancelar"  style="padding: 5px 15px;" OnClick="clear_fields"/>
 
 
     <br /><br /><br />
@@ -57,6 +63,9 @@
     <br /><br /><br /><br />
 
     Selecionar foto<asp:FileUpload ID="photo_upload" runat="server" />
+    
+    <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
 
     
 

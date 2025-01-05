@@ -74,7 +74,7 @@ namespace Final_project.Utilizadores
             else
             {
                 list_council.Items.Clear();
-                list_council.Items.Insert(0, "Selecione um Concelho");
+                list_council.Items.Insert(0, "Escolha um Distrito primeiro");
             }
         }
 
@@ -133,10 +133,9 @@ namespace Final_project.Utilizadores
 
                 connection.Open();
 
-                //guardar em ViewState o ID atribuído ao local
                 ViewState["idLocal"] = command.ExecuteScalar();
 
-                //ativar botão Guardar foto
+                // Activates the save photo button
                 save_photo_button.Enabled = true;
             }
         }
@@ -149,7 +148,6 @@ namespace Final_project.Utilizadores
                 command.Connection = connection;
                 command.CommandText = "SELECT Id, Ficheiro, Legenda FROM Foto WHERE Local = @local";
 
-                //ID do local, definido aquando da criação do local
                 command.Parameters.AddWithValue("@local", ViewState["idLocal"]);
                 connection.Open();
 
@@ -166,63 +164,71 @@ namespace Final_project.Utilizadores
 
         protected void button_save_photo(object sender, EventArgs e)
         {
-            //ficheiro - nome do controlo FileUpload
             if (photo_upload.HasFile)
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                if(ViewState["idLocal"] == null )
                 {
-                    SqlCommand command = new SqlCommand();
-                    command.Connection = connection;
-                    command.CommandText = "LocalFotoCriar";
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@local", ViewState["idLocal"]);
-                    command.Parameters.AddWithValue("@legenda", text_legend.Text);
 
-                    //tipos de ficheiros admitidos
-                    string[] ext = { ".jpg", ".jpeg", ".png", ".gif", ".tiff" };
-                    bool ok = false;
+                    // No photo selected - cancel sql command and show error message
+                    Response.Write("<script>alert('Não tem nehum local selecionado. Caso queira adicionar fotos a locais que tenha adicionado anteriormente " +
+                        "por favor faça-o desde a sua área pessonal.');</script>");
+                    return;
+                }
 
-                    //obter extensão do ficheiro
-                    string extensao = System.IO.Path.GetExtension(photo_upload.FileName).ToString();
-
-                    //verificar se a extensão se encontra no Array de ficheiros admitidos
-                    foreach (string item in ext)
-                        if (extensao == item)
-                            ok = true;
-
-                    //se o tipo de ficheiro está correto
-                    if (ok)
+                else
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        //gerar Guid para evitar nomes repetidos
-                        Guid g = Guid.NewGuid();
-                        string fileName = $"{g}-{photo_upload.FileName}";
-                        photo_upload.SaveAs(Server.MapPath("../imagens/") + fileName);
+                        SqlCommand command = new SqlCommand();
+                        command.Connection = connection;
+                        command.CommandText = "LocalFotoCriar";
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@local", ViewState["idLocal"]);
+                        command.Parameters.AddWithValue("@legenda", text_legend.Text);
 
-                        //definir parâmetro
-                        command.Parameters.AddWithValue("@ficheiro", "imagens/" + fileName);
+                        //Types of files allowed
+                        string[] ext = { ".jpg", ".jpeg", ".png", ".gif", ".tiff" };
+                        bool ok = false;
 
-                        //tipo de ficheiro correto - colocar informação na base de dados
-                        connection.Open();
-                        command.ExecuteNonQuery();
+                        // Get the file extension
+                        string extensao = System.IO.Path.GetExtension(photo_upload.FileName).ToString();
 
-                        //atualizar DataList referente às fotos
-                        GetFotosLocal();
-                    }
-                    else
-                    {
-                        //ficheiro inválido - cancelar execução do procedimento
-                        Response.Write("<script>alert('Selecione um ficheiro do tipo \".jpg\", \".jpeg\", "
-                       + "\".png\", \".gif\" ou \".tiff.');</script>");
-                        return;
+                        // Check if the extension is valid
+                        foreach (string item in ext)
+                            if (extensao == item)
+                                ok = true;
+
+
+                        if (ok)
+                        {
+                            // Generates a GUID to stop reapeating names 
+                            Guid g = Guid.NewGuid();
+                            string fileName = $"{g}-{photo_upload.FileName}";
+                            photo_upload.SaveAs(Server.MapPath("../imagens/") + fileName);
+
+                            command.Parameters.AddWithValue("@ficheiro", "imagens/" + fileName);
+
+                            connection.Open();
+                            command.ExecuteNonQuery();
+
+                            // Updates the DataList with the photos from the Local
+                            GetFotosLocal();
+                        }
+                        else
+                        {
+                            // Invalid file type- cancel sql command and show error message
+                            Response.Write("<script>alert('Selecione um ficheiro do tipo \".jpg\", \".jpeg\", "
+                           + "\".png\", \".gif\" ou \".tiff.');</script>");
+                            return;
+                        }
                     }
                 }
             }
 
             else
             {
-                //não foi selecionado um ficheiro - cancelar execução do procedimento
-                Response.Write("<script>alert('Selecione um ficheiro do tipo \".jpg\", \".jpeg\", "
-               + "\".png\", \".gif\" ou \".tiff.');</script>");
+                // No photo selected - cancel sql command and show error message
+                Response.Write("<script>alert('Selecione um ficheiro.');</script>");
                 return;
             }
         }
@@ -236,10 +242,10 @@ namespace Final_project.Utilizadores
                 using(SqlConnection connection = new SqlConnection(connectionString))
                 {
 
-                    //colocar em ViewState o Id da foto selecionada
+                    // Puts the photo ID on the viewstate
                     ViewState["idFoto"] = e.CommandArgument.ToString();
 
-                    //selecionar legenda da foto selecionada
+                    // Selects the Legenda fro mthe selected photo
                     SqlCommand commandFoto = new SqlCommand();
                     commandFoto.Connection = connection;
                     commandFoto.CommandText = "SELECT Legenda FROM Foto WHERE Id = @id";
@@ -259,63 +265,104 @@ namespace Final_project.Utilizadores
 
         protected void button_edit_legend(object sender, EventArgs e)
         {
-            using(SqlConnection connection = new SqlConnection(connectionString))
+
+            if(ViewState["idFoto"] == null)
             {
-                SqlCommand commandFoto = new SqlCommand();
-                commandFoto.Connection = connection;
-                commandFoto.CommandText = "UPDATE Foto SET Legenda = @legenda WHERE Id = @id";
-                commandFoto.CommandType = CommandType.Text;
 
-                //ID da foto definido quando a foto é selecionada
-                commandFoto.Parameters.AddWithValue("@id", ViewState["idFoto"]);
-                commandFoto.Parameters.AddWithValue("@legenda", text_legend.Text);
-                connection.Open();
-                commandFoto.ExecuteNonQuery();
+                // No photo selected - cancel sql command and show error message
+                Response.Write("<script>alert('Selecione uma foto.');</script>");
+                return;
+            }
 
-                text_legend.Text = string.Empty;
+            else
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlCommand commandFoto = new SqlCommand();
+                    commandFoto.Connection = connection;
+                    commandFoto.CommandText = "UPDATE Foto SET Legenda = @legenda WHERE Id = @id";
+                    commandFoto.CommandType = CommandType.Text;
 
-                //atualizar DataList fotos do local
-                GetFotosLocal();
+                    //ID da foto definido quando a foto é selecionada
+                    commandFoto.Parameters.AddWithValue("@id", ViewState["idFoto"]);
+                    commandFoto.Parameters.AddWithValue("@legenda", text_legend.Text);
+                    connection.Open();
+                    commandFoto.ExecuteNonQuery();
+
+                    text_legend.Text = string.Empty;
+
+                    // Updates the DataList with the photos from the Local
+                    GetFotosLocal();
+                }
             }
         }
 
         protected void button_eliminate_photo(object sender, EventArgs e)
         {
 
-            using(SqlConnection connection = new SqlConnection(connectionString))
+            if (ViewState["idFoto"] == null)
             {
-                //eliminar ficheiro
-                SqlCommand commandFoto = new SqlCommand();
-                commandFoto.Connection = connection;
-                commandFoto.CommandText = "SELECT Ficheiro FROM Foto WHERE Id = @id";
 
-                //ID da foto definido quando a foto é selecionada
-                commandFoto.Parameters.AddWithValue("@id", ViewState["idFoto"]);
-                connection.Open();
-
-                //obter nome do ficheiro a eliminar
-                SqlDataReader reader = commandFoto.ExecuteReader();
-                while (reader.Read())
-                {
-                    string ficheiro = Server.MapPath("../" + reader[0].ToString());
-                    //eliminar ficheiro
-                    if (File.Exists(ficheiro))
-                        File.Delete(ficheiro);
-                }
-                reader.Close();
-
-                //eliminar dados na tabela
-                commandFoto.Parameters.Clear();
-                commandFoto.CommandText = "DELETE Foto WHERE Id = @id";
-                commandFoto.CommandType = CommandType.Text;
-                commandFoto.Parameters.AddWithValue("@id", ViewState["idFoto"]);
-                commandFoto.ExecuteNonQuery();
-
-                text_legend.Text = string.Empty;
-
-                //atualizar DataList fotos do local
-                GetFotosLocal();
+                // No photo selected - cancel sql command and show error message
+                Response.Write("<script>alert('Selecione uma foto.');</script>");
+                return;
             }
+
+            else
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    // Eliminates the file
+                    SqlCommand commandFoto = new SqlCommand();
+                    commandFoto.Connection = connection;
+                    commandFoto.CommandText = "SELECT Ficheiro FROM Foto WHERE Id = @id";
+
+                    // ID of the photo definited when the photo is selected
+                    commandFoto.Parameters.AddWithValue("@id", ViewState["idFoto"]);
+                    connection.Open();
+
+                    // Get the name of the file
+                    SqlDataReader reader = commandFoto.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string ficheiro = Server.MapPath("../" + reader[0].ToString());
+                        //eliminar ficheiro
+                        if (File.Exists(ficheiro))
+                            File.Delete(ficheiro);
+                    }
+                    reader.Close();
+
+                    // Eliminates the data on the databse table
+                    commandFoto.Parameters.Clear();
+                    commandFoto.CommandText = "DELETE Foto WHERE Id = @id";
+                    commandFoto.CommandType = CommandType.Text;
+                    commandFoto.Parameters.AddWithValue("@id", ViewState["idFoto"]);
+                    commandFoto.ExecuteNonQuery();
+
+                    text_legend.Text = string.Empty;
+
+                    // Updates the DataList with the photos from the Local
+                    GetFotosLocal();
+                }
+            }
+        }
+
+
+
+        protected void clear_fields(object sender, EventArgs e)
+        {
+            text_name.Text = string.Empty;
+            text_description.Text = string.Empty;
+            text_address.Text = string.Empty;
+            text_town.Text = string.Empty;
+            text_legend.Text = string.Empty;
+
+
+            list_council.Items.Clear();
+            list_council.Items.Insert(0, "Escolha um Distrito primeiro");
+            load_distritos();
+            ViewState["idLocal"] = 0;
+
         }
 
         protected void button_cancel(object sender, EventArgs e)
@@ -323,43 +370,55 @@ namespace Final_project.Utilizadores
             using(SqlConnection connection = new SqlConnection(connectionString))
             {
 
-                //obter nome dos ficheiros associados ao local
-                SqlCommand commandFotos = new SqlCommand();
-                commandFotos.Connection = connection;
-                commandFotos.CommandText = "SELECT Ficheiro FROM Foto WHERE Local = @local";
-                commandFotos.Parameters.AddWithValue("@local", ViewState["idLocal"]);
 
-                Response.Write("Current idLocal: " + ViewState["idLocal"]?.ToString());
-
-                connection.Open();
-                SqlDataReader reader = commandFotos.ExecuteReader();
-                while (reader.Read())
+                if (ViewState["idLocal"] == null || (int)ViewState["idLocal"] == 0)
                 {
-                    string file = Server.MapPath("../" + reader[0].ToString());
-                    //eliminar ficheiros
-                    if (File.Exists(file))
-                        File.Delete(file);
-                }
-                reader.Close();
 
-                //eliminar dados das tabelas
-                SqlCommand commandLocal = new SqlCommand();
-                commandLocal.Connection = connection;
-                commandLocal.CommandText = "LocalEliminar";
-                commandLocal.CommandType = CommandType.StoredProcedure;
-                
-                
-                if (ViewState["idLocal"] == null)
-                {
-                    Response.Write("Error: idLocal is null");
+                    // No Local selected - clear fields of the page
+                    clear_fields(sender, e);
                     return;
                 }
+
                 else
                 {
+                    // Gets the name of the files associated with the Local
+                    SqlCommand commandFotos = new SqlCommand();
+                    commandFotos.Connection = connection;
+                    commandFotos.CommandText = "SELECT Ficheiro FROM Foto WHERE Local = @local";
+                    commandFotos.Parameters.AddWithValue("@local", ViewState["idLocal"]);
+
                     Response.Write("Current idLocal: " + ViewState["idLocal"]?.ToString());
-                    commandLocal.Parameters.AddWithValue("@idlocal", ViewState["idLocal"]);
-                    commandLocal.ExecuteNonQuery();
-                    ViewState["idLocal"] = null;
+
+                    connection.Open();
+                    SqlDataReader reader = commandFotos.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        string file = Server.MapPath("../" + reader[0].ToString());
+                        // Eleminates the file
+                        if (File.Exists(file))
+                            File.Delete(file);
+                    }
+                    reader.Close();
+
+                    // Eliminates the data from the database tables
+                    SqlCommand commandLocal = new SqlCommand();
+                    commandLocal.Connection = connection;
+                    commandLocal.CommandText = "LocalEliminar";
+                    commandLocal.CommandType = CommandType.StoredProcedure;
+
+
+                    if (ViewState["idLocal"] == null)
+                    {
+                        Response.Write("Error: idLocal is null");
+                        return;
+                    }
+                    else
+                    {
+                        Response.Write("Current idLocal: " + ViewState["idLocal"]?.ToString());
+                        commandLocal.Parameters.AddWithValue("@idlocal", ViewState["idLocal"]);
+                        commandLocal.ExecuteNonQuery();
+                        ViewState["idLocal"] = null;
+                    }
                 }
             }
         }

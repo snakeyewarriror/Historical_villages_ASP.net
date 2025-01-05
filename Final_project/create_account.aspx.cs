@@ -38,7 +38,7 @@ namespace Final_project
         protected void buttonCriarConta_Click(object sender, EventArgs e)
         {
             //Criar conta - Membership
-            Membership.CreateUser(TextBoxUsername.Text, TextBoxPassword.Text, TextBoxEmail.Text);
+            Membership.CreateUser(TextBoxUsername.Text, password.Text, TextBoxEmail.Text);
 
             //obter o UserID
             MembershipUser user = Membership.GetUser(TextBoxUsername.Text);
@@ -56,7 +56,7 @@ namespace Final_project
 
                     // Add the values to the query
                     command.Parameters.Add("@user_id", SqlDbType.NVarChar).Value = user_id.ToString();
-                    command.Parameters.Add("@nome", SqlDbType.NVarChar, 50).Value = TextBoxNome.Text;
+                    command.Parameters.Add("@nome", SqlDbType.NVarChar, 50).Value = TextBoxUsername.Text;
                     command.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = TextBoxEmail.Text;
                     command.Parameters.Add("@data", SqlDbType.DateTime).Value = DateTime.Parse(TextBoxDate.Text);
 
