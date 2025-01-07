@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
     const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const confirmPasswordInput = document.getElementById('passwordConfirmation');
     const eyeIconPassword = document.getElementById('eyeIconPassword');
     const eyeIconConfirmPassword = document.getElementById('eyeIconConfirmPassword');
 
