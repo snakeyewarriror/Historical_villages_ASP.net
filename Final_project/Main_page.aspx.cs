@@ -17,6 +17,7 @@ namespace Final_project
         {
             if (!IsPostBack)
             {
+
                 GetLocais();
                 ViewState["contador"] = 0;
             }

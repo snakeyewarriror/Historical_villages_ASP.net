@@ -17,6 +17,9 @@
                     <asp:TextBox runat="server" ID="TextBoxUsername" class="form-control" placeholder="Insira o seu nome" />
 
                     <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="TextBoxUsername" runat="server" Display="Dynamic" ForeColor="#CC0000" />
+
+                    <!-- Label for error message -->
+                    <asp:Label ID="LabelErrorMessage" runat="server" ForeColor="Red" Visible="false"></asp:Label>
                 </div>
 
 

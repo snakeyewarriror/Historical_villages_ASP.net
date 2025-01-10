@@ -63,9 +63,6 @@
     <br /><br /><br /><br />
 
     Selecionar foto<asp:FileUpload ID="photo_upload" runat="server" />
-    
-    <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-    <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
 
     
 

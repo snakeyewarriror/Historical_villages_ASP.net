@@ -37,40 +37,53 @@ namespace Final_project
 
         protected void buttonCriarConta_Click(object sender, EventArgs e)
         {
-            //Criar conta - Membership
-            Membership.CreateUser(TextBoxUsername.Text, password.Text, TextBoxEmail.Text);
 
-            //obter o UserID
-            MembershipUser user = Membership.GetUser(TextBoxUsername.Text);
-            object user_id = user.ProviderUserKey;
-
-
-            using (SqlConnection connection = new SqlConnection(@"data source=.\Sqlexpress; initial catalog = Locais; integrated security = true;"))
+            try
             {
-                using (SqlCommand command = new SqlCommand())
+
+                //Criar conta - Membership
+                Membership.CreateUser(TextBoxUsername.Text, password.Text, TextBoxEmail.Text);
+
+                //obter o UserID
+                MembershipUser user = Membership.GetUser(TextBoxUsername.Text);
+                object user_id = user.ProviderUserKey;
+
+
+                using (SqlConnection connection = new SqlConnection(@"data source=.\Sqlexpress; initial catalog = Locais; integrated security = true;"))
                 {
-                    command.Connection = connection;
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
 
-                    command.CommandText = "INSERT Utilizador(Id, Nome, Email, DataNascimento) " +
-                        "VALUES( @user_id, @nome, @email, @data)";
+                        command.CommandText = "INSERT Utilizador(Id, Nome, Email, DataNascimento) " +
+                            "VALUES( @user_id, @nome, @email, @data)";
 
-                    // Add the values to the query
-                    command.Parameters.Add("@user_id", SqlDbType.NVarChar).Value = user_id.ToString();
-                    command.Parameters.Add("@nome", SqlDbType.NVarChar, 50).Value = TextBoxUsername.Text;
-                    command.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = TextBoxEmail.Text;
-                    command.Parameters.Add("@data", SqlDbType.DateTime).Value = DateTime.Parse(TextBoxDate.Text);
-
-
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    command.Connection.Close();
+                        // Add the values to the query
+                        command.Parameters.Add("@user_id", SqlDbType.NVarChar).Value = user_id.ToString();
+                        command.Parameters.Add("@nome", SqlDbType.NVarChar, 50).Value = TextBoxUsername.Text;
+                        command.Parameters.Add("@email", SqlDbType.NVarChar, 100).Value = TextBoxEmail.Text;
+                        command.Parameters.Add("@data", SqlDbType.DateTime).Value = DateTime.Parse(TextBoxDate.Text);
 
 
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        command.Connection.Close();
+                    }
                 }
+
+                // Redirects to the login page
+                Response.Redirect("login.aspx", false);
             }
 
-            // Redirects to the login page
-            Response.Redirect("login.aspx");
+            // User with the same name found
+            catch (MembershipCreateUserException ex)
+            {
+                LabelErrorMessage.Text = "Nome de utilizador já existe.";
+                LabelErrorMessage.Visible = true;
+
+                // Optionally stop further execution
+                return;
+            }
         }
 
     }

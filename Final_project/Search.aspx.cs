@@ -92,7 +92,7 @@ namespace Final_project
 
             if (!string.IsNullOrWhiteSpace(textNome.Text) ||
                 listDistrito.SelectedValue != "Selecione um Distrito" ||
-                (!string.IsNullOrEmpty(listConcelho.SelectedValue) && listConcelho.SelectedValue != "Selecione um Concelho"))
+                (!string.IsNullOrEmpty(listConcelho.SelectedValue) && listConcelho.SelectedValue != "Escolha um Distrito primeiro"))
             {
                 command += " WHERE ";
                 if (!string.IsNullOrWhiteSpace(textNome.Text))
@@ -117,11 +117,11 @@ namespace Final_project
             }
 
             DataTable resultadoPesquisa = new DataTable();
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand(command, conn);
+                SqlCommand cmd = new SqlCommand(command, connection);
                 cmd.Parameters.AddRange(parameters.ToArray());
-                conn.Open();
+                connection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 resultadoPesquisa.Load(reader);
                 reader.Close();
