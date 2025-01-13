@@ -76,7 +76,7 @@ namespace Final_project
             }
 
             // User with the same name found
-            catch (MembershipCreateUserException ex)
+            catch (MembershipCreateUserException)
             {
                 LabelErrorMessage.Text = "Nome de utilizador já existe.";
                 LabelErrorMessage.Visible = true;

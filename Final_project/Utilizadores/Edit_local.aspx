@@ -28,8 +28,6 @@
 
     <asp:Button ID="save_button" runat="server" class="btn-dark" Text="Guardar"  style="padding: 5px 15px;" OnClick="button_save_local"/>
 
-    <asp:Button ID="cancel_button" runat="server" class="btn-dark" Text="Cancelar"  style="padding: 5px 15px;" OnClick="clear_fields"/>
-
 
     <br /><br /><br />
 
@@ -76,6 +74,6 @@
 
     <asp:Button ID="eliminate_photo_button" runat="server" class="btn-dark" Text="Eliminar foto"  style="padding: 5px 15px;" OnClick="button_eliminate_photo"/>
 
-    <asp:Button ID="cancel_everything_button" runat="server" class="btn-dark" Text="Cancelar tudo"  style="padding: 5px 15px;" OnClick="button_cancel"/>
+    <asp:Button ID="cancel_everything_button" runat="server" class="btn-dark" Text="Cancelar"  style="padding: 5px 15px;" OnClick="buttonCancelar_Click"/>
 
 </asp:Content>

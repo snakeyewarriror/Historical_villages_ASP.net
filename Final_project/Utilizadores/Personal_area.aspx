@@ -13,7 +13,6 @@
                         style="width: 250px;" />
                      </td>
                  </tr>
-
                  <tr>
                      <td>
                         <asp:Label Text='<%# Eval("NomeLocal") %>' runat="server" CssClass="fs-3" />
@@ -22,11 +21,8 @@
 
                  <tr>
                      <td>
-                         <asp:LinkButton ID="eidtLocal" runat="server"
-                            CommandArgument='<%# Eval("LocalID") %>'
-                             oncommand="Link_details_Command"
-                            CssClass="btn mt-4" BackColor="#D7D3BF">Editar local
-                    </asp:LinkButton>
+                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# "~/Utilizadores/Edit_local.aspx?id=" + Eval("LocalID") %>'>asfasf
+                        </asp:HyperLink>
                      </td>
                  </tr>
 

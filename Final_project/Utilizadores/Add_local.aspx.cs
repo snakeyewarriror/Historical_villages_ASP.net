@@ -348,7 +348,6 @@ namespace Final_project.Utilizadores
         }
 
 
-
         protected void clear_fields(object sender, EventArgs e)
         {
             text_name.Text = string.Empty;
