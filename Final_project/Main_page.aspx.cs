@@ -12,9 +12,28 @@ namespace Final_project
     public partial class Main_page : System.Web.UI.Page
     {
         private int currentPage;
+        private string connection_string = @"data source=.\sqlexpress; initial catalog = Locais; integrated security = true;";
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            using(SqlConnection connection = new SqlConnection(connection_string))
+            {
+                using (SqlCommand command = new SqlCommand("GetTop10Locais", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        // colocar dados no DataList
+                        listLocaisTop.DataSource = reader;
+                        listLocaisTop.DataBind();
+                    }
+                    connection.Close();
+                }
+            }
+
+
             if (!IsPostBack)
             {
 
@@ -28,7 +47,7 @@ namespace Final_project
         void GetLocais()
         {
             SqlConnection connection = new SqlConnection
-            (@"data source=.\sqlexpress; initial catalog = Locais; integrated security=true;");
+            (connection_string);
 
             SqlCommand command = new SqlCommand();
             command.CommandText = "GetLocais";
@@ -90,7 +109,6 @@ namespace Final_project
         protected void linkLast_click(object sender, EventArgs e)
         {
             currentPage = (int)ViewState["total"] - 1;
-            currentPage += 1;
             ViewState["contador"] = currentPage;
             BindListLocais((DataTable)ViewState["dataSource"]);
         }

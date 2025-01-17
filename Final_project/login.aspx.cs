@@ -18,7 +18,7 @@ namespace Final_project
 
         protected void loginUtilizador_LoggedIn(object sender, EventArgs e)
         {
-            //obter dados do utilizador - Membership
+            // Get the user name from the login field - Membership
             MembershipUser user = Membership.GetUser(loginUser.UserName);
 
             //Login de utilizador - obter ID (chave primária - Utilizador) e colocar em Session

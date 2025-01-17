@@ -7,18 +7,22 @@
     <meta charset="UTF-8">
     <meta name="viewport">
     <title>Aldeias Históricas de Portugal</title>
-    <link href="Content/bootstrap.min.css" rel="stylesheet" /> 
+
+    <!-- CSS -->
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="CSS/Style.css">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.2.0/dist/css/coreui.min.css" rel="stylesheet" integrity="sha384-u3h5SFn5baVOWbh8UkOrAaLXttgSF0vXI15ODtCSxl0v/VKivnCN6iHCcvlyTL7L" crossorigin="anonymous">
+
+    <!-- Javascript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"> </script>
     <asp:ContentPlaceHolder ID="head" runat="server"> 
     </asp:ContentPlaceHolder> 
 </head>
+
+
 <body>
 
-    
     <form id="form1" runat="server">
         <!-- Header --> 
         <div class="container-fluid">
@@ -84,7 +88,7 @@
 
 
         <!-- Placeholder content -->
-        <div>
+        <div class="container-fluid">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>

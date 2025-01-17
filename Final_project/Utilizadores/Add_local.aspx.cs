@@ -98,38 +98,10 @@ namespace Final_project.Utilizadores
                 command.Parameters.AddWithValue("@localidade", text_town.Text);
                 command.Parameters.AddWithValue("@concelho", list_council.SelectedValue);
                 command.Parameters.AddWithValue("@utilizador", Session["id_utilizador"]);
-                command.Parameters.AddWithValue("@latitude", DBNull.Value);
-                command.Parameters.AddWithValue("@longitude", DBNull.Value);
 
-                //obter latitude e longitude
-                /*
-                Datum localizacao = new Datum();
-                string key = "chave de acesso à API";
-                string local = $"{textLocalidade.Text},Portugal";
-                WebRequest request = WebRequest.Create
-
-                ($"https://api.positionstack.com/v1/forward?access_key={key}&query={local}");
-                WebResponse response = request.GetResponse();
-                if (response != null)
-                {
-                 Stream stream = response.GetResponseStream();
-                 StreamReader reader = new StreamReader(stream);
-                 string json = reader.ReadToEnd();
-                 Root result = JsonConvert.DeserializeObject<Root>(json);
-                 // obter latitude e longitude
-                 if (result.data != null && result.data.Count > 0)
-                 {
-                 localizacao = result.data[0];
-                 command.Parameters.AddWithValue("@latitude", localizacao.latitude);
-                 command.Parameters.AddWithValue("@longitude", localizacao.longitude);
-                 }
-                 else
-                 {
-                 command.Parameters.AddWithValue("@latitude", DBNull.Value);
-                 command.Parameters.AddWithValue("@longitude", DBNull.Value);
-                 }
-                }
-                */
+                command.Parameters.AddWithValue("@latitude", latitude.Value);
+                command.Parameters.AddWithValue("@longitude", longitude.Value);
+                
 
                 connection.Open();
 
@@ -347,8 +319,30 @@ namespace Final_project.Utilizadores
             }
         }
 
+        protected void button_cancel_photo(object sender, EventArgs e)
+        {
+            text_legend.Text = string.Empty;
+            //o ficheiro selecionado é removido -
+            //o valor do FileUpload não é mantido em ViewState
+        }
 
-        protected void clear_fields(object sender, EventArgs e)
+
+        protected void clear_local_fields(object sender, EventArgs e)
+        {
+            text_name.Text = string.Empty;
+            text_description.Text = string.Empty;
+            text_address.Text = string.Empty;
+            text_town.Text = string.Empty;
+
+
+            list_council.Items.Clear();
+            list_council.Items.Insert(0, "Escolha um Distrito primeiro");
+            load_distritos();
+            ViewState["idLocal"] = 0;
+
+        }
+
+        protected void clear_fields()
         {
             text_name.Text = string.Empty;
             text_description.Text = string.Empty;
@@ -362,63 +356,51 @@ namespace Final_project.Utilizadores
             load_distritos();
             ViewState["idLocal"] = 0;
 
+            // Clear the DataList by setting the DataSource to null
+            list_photos.DataSource = null;
+
+            // Bind the empty DataSource to refresh the DataList
+            list_photos.DataBind();
+
         }
 
-        protected void button_cancel(object sender, EventArgs e)
+        protected void button_cancel_all(object sender, EventArgs e)
         {
-            using(SqlConnection connection = new SqlConnection(connectionString))
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
+                //obter nome dos ficheiros associados ao local
+                SqlCommand command= new SqlCommand();
 
-                if (ViewState["idLocal"] == null || (int)ViewState["idLocal"] == 0)
+                command.CommandText = "SELECT Ficheiro FROM Foto WHERE Local = @local";
+                command.Parameters.AddWithValue("@local", ViewState["idLocal"]);
+
+                command.Connection = connection;
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-
-                    // No Local selected - clear fields of the page
-                    clear_fields(sender, e);
-                    return;
+                    string ficheiro = Server.MapPath("../" + reader[0].ToString());
+                    //eliminar ficheiros
+                    if (File.Exists(ficheiro))
+                        File.Delete(ficheiro);
                 }
-
-                else
-                {
-                    // Gets the name of the files associated with the Local
-                    SqlCommand commandFotos = new SqlCommand();
-                    commandFotos.Connection = connection;
-                    commandFotos.CommandText = "SELECT Ficheiro FROM Foto WHERE Local = @local";
-                    commandFotos.Parameters.AddWithValue("@local", ViewState["idLocal"]);
-
-                    Response.Write("Current idLocal: " + ViewState["idLocal"]?.ToString());
-
-                    connection.Open();
-                    SqlDataReader reader = commandFotos.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        string file = Server.MapPath("../" + reader[0].ToString());
-                        // Eleminates the file
-                        if (File.Exists(file))
-                            File.Delete(file);
-                    }
-                    reader.Close();
-
-                    // Eliminates the data from the database tables
-                    SqlCommand commandLocal = new SqlCommand();
-                    commandLocal.Connection = connection;
-                    commandLocal.CommandText = "LocalEliminar";
-                    commandLocal.CommandType = CommandType.StoredProcedure;
+                reader.Close();
 
 
-                    if (ViewState["idLocal"] == null)
-                    {
-                        Response.Write("Error: idLocal is null");
-                        return;
-                    }
-                    else
-                    {
-                        Response.Write("Current idLocal: " + ViewState["idLocal"]?.ToString());
-                        commandLocal.Parameters.AddWithValue("@idlocal", ViewState["idLocal"]);
-                        commandLocal.ExecuteNonQuery();
-                        ViewState["idLocal"] = null;
-                    }
-                }
+                //eliminar dados das tabelas
+                SqlCommand commandLocal = new SqlCommand();
+
+                commandLocal.Connection = connection;
+                commandLocal.CommandText = "LocalEliminar";
+                commandLocal.CommandType = CommandType.StoredProcedure;
+                commandLocal.Parameters.AddWithValue("@idlocal", ViewState["idLocal"]);
+                commandLocal.ExecuteNonQuery();
+
+
+                clear_fields();
+                ViewState["idLocal"] = null;
             }
         }
 

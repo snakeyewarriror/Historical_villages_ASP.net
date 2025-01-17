@@ -14,18 +14,10 @@ namespace Final_project.Utilizadores
     {
 
         private string connectionString = @"data source=.\sqlexpress; initial catalog = Locais; integrated security=true;";
-        private int local_id = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["id"] != null)
-            {
-                if (int.TryParse(Request.QueryString["id"], out local_id))
-                {
-                    // Successfully parsed the "id" parameter
-                }
-            }
-                if (!IsPostBack)
+            if (!IsPostBack)
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -35,7 +27,7 @@ namespace Final_project.Utilizadores
                     command.CommandText = " SELECT L.Nome, L.Morada, L.Localidade, L.Descricao, " +
                      "CAST(L.Concelho AS NVARCHAR), CAST(C.Distrito AS NVARCHAR) " +
                      "FROM Local L JOIN Concelho C ON L.Concelho = C.Id WHERE L.Id = @local";
-                    command.Parameters.AddWithValue("@local", local_id);
+                    command.Parameters.AddWithValue("@local", Session["id_local"]);
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     //variáveis a utilizar na seleção do concelho e respetivo distrito
@@ -71,7 +63,7 @@ namespace Final_project.Utilizadores
                     }
 
                     //4 - carregar 
-                    GetFotosLocal(local_id.ToString());
+                    GetFotosLocal(Session["id_local"].ToString());
                 }
             }
         }
@@ -157,7 +149,7 @@ namespace Final_project.Utilizadores
                 command.CommandType = CommandType.StoredProcedure;
 
 
-                command.Parameters.AddWithValue("@id", local_id);
+                command.Parameters.AddWithValue("@id", Session["id_local"]);
 
 
                 command.Parameters.AddWithValue("@nome", text_name.Text);
@@ -188,7 +180,7 @@ namespace Final_project.Utilizadores
                     command.Connection = connection;
                     command.CommandText = "LocalFotoCriar";
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@local", local_id);
+                    command.Parameters.AddWithValue("@local", Session["id_local"]);
                     command.Parameters.AddWithValue("@legenda", text_legend.Text);
 
                     //Types of files allowed
@@ -217,7 +209,7 @@ namespace Final_project.Utilizadores
                         command.ExecuteNonQuery();
 
                         // Updates the DataList with the photos from the Local
-                        GetFotosLocal((local_id.ToString()));
+                        GetFotosLocal((Session["id_local"].ToString()));
                     }
                     else
                     {
@@ -296,7 +288,7 @@ namespace Final_project.Utilizadores
                     text_legend.Text = string.Empty;
 
                     // Updates the DataList with the photos from the Local
-                    GetFotosLocal((local_id.ToString()));
+                    GetFotosLocal((Session["id_local"].ToString()));
                 }
             }
         }
@@ -346,14 +338,98 @@ namespace Final_project.Utilizadores
                     text_legend.Text = string.Empty;
 
                     // Updates the DataList with the photos from the Local
-                    GetFotosLocal(local_id.ToString());
+                    GetFotosLocal(Session["id_local"].ToString());
                 }
+            }
+        }
+
+        protected void button_cancel_photo(object sender, EventArgs e)
+        {
+            text_legend.Text = string.Empty;
+        }
+
+
+        protected void clear_local_fields(object sender, EventArgs e)
+        {
+            text_name.Text = string.Empty;
+            text_description.Text = string.Empty;
+            text_address.Text = string.Empty;
+            text_town.Text = string.Empty;
+
+
+            list_council.Items.Clear();
+            list_council.Items.Insert(0, "Escolha um Distrito primeiro");
+            load_distritos();
+            ViewState["idLocal"] = 0;
+
+        }
+
+        protected void clear_fields()
+        {
+            text_name.Text = string.Empty;
+            text_description.Text = string.Empty;
+            text_address.Text = string.Empty;
+            text_town.Text = string.Empty;
+            text_legend.Text = string.Empty;
+
+
+            list_council.Items.Clear();
+            list_council.Items.Insert(0, "Escolha um Distrito primeiro");
+            load_distritos();
+            ViewState["idLocal"] = 0;
+
+            // Clear the DataList by setting the DataSource to null
+            list_photos.DataSource = null;
+
+            // Bind the empty DataSource to refresh the DataList
+            list_photos.DataBind();
+
+        }
+
+        protected void eliminate_local(object sender, EventArgs e)
+        {
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+
+                //obter nome dos ficheiros associados ao local
+                SqlCommand command= new SqlCommand();
+
+                command.CommandText = "SELECT Ficheiro FROM Foto WHERE Local = @local";
+                command.Parameters.AddWithValue("@local", Session["id_local"]);
+
+                command.Connection = connection;
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    string ficheiro = Server.MapPath("../" + reader[0].ToString());
+                    //eliminar ficheiros
+                    if (File.Exists(ficheiro))
+                        File.Delete(ficheiro);
+                }
+                reader.Close();
+
+
+                //eliminar dados das tabelas
+                SqlCommand commandLocal = new SqlCommand();
+
+                commandLocal.Connection = connection;
+                commandLocal.CommandText = "LocalEliminar";
+                commandLocal.CommandType = CommandType.StoredProcedure;
+                commandLocal.Parameters.AddWithValue("@idlocal", Session["id_local"]);
+                commandLocal.ExecuteNonQuery();
+
+                Session["id_local"] = null;
+                Response.Redirect("~/Utilizadores/Personal_area.aspx");
             }
         }
 
         protected void buttonCancelar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("areaPessoal.aspx");
+            Session["id_local"] = null;
+            Response.Redirect("~/Utilizadores/Personal_area.aspx");
         }
     }
 }

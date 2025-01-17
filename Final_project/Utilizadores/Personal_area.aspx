@@ -21,8 +21,11 @@
 
                  <tr>
                      <td>
-                        <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# "~/Utilizadores/Edit_local.aspx?id=" + Eval("LocalID") %>'>asfasf
-                        </asp:HyperLink>
+                        <asp:Button ID="edit_local_button" runat="server" CssClass="btn-dark" Text="Editar local" Style="padding: 5px 15px;" 
+                            OnClick="redirect_local" CommandArgument='<%# Eval("LocalID") %>' />
+                         
+                        <asp:Button ID="eliminate_local_button" runat="server" CssClass="btn-dark" Text="Eliminar local" Style="padding: 5px 15px;" 
+                            OnClick="eliminate_local" CommandArgument='<%# Eval("LocalID") %>' />
                      </td>
                  </tr>
 

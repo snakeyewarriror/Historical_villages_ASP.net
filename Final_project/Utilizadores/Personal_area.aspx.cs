@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
 
 namespace Final_project.Utilizadores
 {
@@ -25,7 +26,6 @@ namespace Final_project.Utilizadores
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-
 
                 // No photo selected - cancel sql command and show error message
                 string id = Session["id_utilizador"].ToString();
@@ -83,5 +83,58 @@ namespace Final_project.Utilizadores
                 }
             }
         }
+
+        protected void redirect_local(object sender, EventArgs e)
+        {
+            int local_id = Convert.ToInt32(((Button)sender).CommandArgument);
+
+            Session["id_local"] = local_id;
+            Response.Redirect("~/Utilizadores/Edit_local.aspx");
+        }
+
+        protected void eliminate_local(object sender, EventArgs e)
+        {
+
+
+            int local_id = Convert.ToInt32(((Button)sender).CommandArgument);
+            Session["id_local"] = local_id;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+
+                //obter nome dos ficheiros associados ao local
+                SqlCommand command = new SqlCommand();
+
+                command.CommandText = "SELECT Ficheiro FROM Foto WHERE Local = @local";
+                command.Parameters.AddWithValue("@local", Session["id_local"]);
+
+                command.Connection = connection;
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    string ficheiro = Server.MapPath("../" + reader[0].ToString());
+                    //eliminar ficheiros
+                    if (File.Exists(ficheiro))
+                        File.Delete(ficheiro);
+                }
+                reader.Close();
+
+
+                //eliminar dados das tabelas
+                SqlCommand commandLocal = new SqlCommand();
+
+                commandLocal.Connection = connection;
+                commandLocal.CommandText = "LocalEliminar";
+                commandLocal.CommandType = CommandType.StoredProcedure;
+                commandLocal.Parameters.AddWithValue("@idlocal", Session["id_local"]);
+                commandLocal.ExecuteNonQuery();
+
+                Session["id_local"] = null;
+                Load_locais();
+            }
+        }
+
     }
 }

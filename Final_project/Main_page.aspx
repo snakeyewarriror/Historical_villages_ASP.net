@@ -44,6 +44,26 @@
         <asp:LinkButton Text="Última" runat="server" ID="linkLast" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkLast_click" />
     </div>
 
+    <asp:DataList ID="listLocaisTop" runat="server" RepeatDirection="Vertical" CellPadding="10">
+        <ItemTemplate>
+            <div style="text-align: center; margin-bottom: 20px;">
+
+                <div style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">
+                    <span style="color: #555;">#<%# Eval("NumeroOrdem") %>:</span>
+                    <a href='local.aspx?id=<%# Eval("LocalId") %>' style="text-decoration: none; color: #333;"> <%# Eval("LocalNome") %> </a>
+                </div>
+
+                <a href='local.aspx?id=<%# Eval("LocalId") %>'>
+                    <img src='<%# Eval("PrimeiraImagem") %>' alt='<%# Eval("LocalNome") %>' style="max-width: 80%; height: auto; border: 1px solid #ccc;" />
+                </a>
+
+                <div style="margin-top: 10px; font-size: 14px; color: #666; text-align: right; padding-right:35px;">
+                 Classificação: <%# Eval("MediaClassificacao") %>
+                </div>
+            </div>
+         </ItemTemplate>
+    </asp:DataList>
+
     <a href="Utilizadores/Personal_area.aspx">click here to go to personal area</a>
     <a href="Utilizadores/Add_local.aspx">click here to go to add place</a>
 </asp:Content>

@@ -219,6 +219,7 @@
   <ItemGroup>
     <Folder Include="CSS\" />
     <Folder Include="Imagens\" />
+    <Folder Include="Javascript\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

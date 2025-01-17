@@ -14,6 +14,9 @@ namespace Final_project
 
         private int currentPage;
 
+        // Bool to check if the page is searching for anyhting
+        bool searching = false;
+
         private string connectionString = @"data source=.\sqlexpress; initial catalog = Locais; integrated security=true;";
 
         void LoadDistritos()
@@ -27,7 +30,8 @@ namespace Final_project
                 listDistrito.DataTextField = "Nome";
                 listDistrito.DataValueField = "Id";
                 listDistrito.DataBind();
-                // Adicionar item inicial
+
+                // Add initial item
                 listDistrito.Items.Insert(0, "Selecione um Distrito");
             }
         }
@@ -59,7 +63,8 @@ namespace Final_project
                 listConcelho.DataTextField = "Nome";
                 listConcelho.DataValueField = "Id";
                 listConcelho.DataBind();
-                // Adicionar item inicial
+
+                // Add inital item
                 listConcelho.Items.Insert(0, "Selecione um Concelho");
             }
         }
@@ -90,10 +95,14 @@ namespace Final_project
 
             List<SqlParameter> parameters = new List<SqlParameter>();
 
+
             if (!string.IsNullOrWhiteSpace(textNome.Text) ||
                 listDistrito.SelectedValue != "Selecione um Distrito" ||
                 (!string.IsNullOrEmpty(listConcelho.SelectedValue) && listConcelho.SelectedValue != "Escolha um Distrito primeiro"))
             {
+
+                searching = true;
+                System.Diagnostics.Debug.WriteLine(searching);
                 command += " WHERE ";
                 if (!string.IsNullOrWhiteSpace(textNome.Text))
                 {
@@ -107,14 +116,9 @@ namespace Final_project
                     command += "D.Id = @DistritoId";
                     parameters.Add(new SqlParameter("@DistritoId", listDistrito.SelectedValue));
                 }
-                if (!string.IsNullOrEmpty(listConcelho.SelectedValue) && (listConcelho.SelectedValue != "Selecione um Concelho" &&
-                    listConcelho.SelectedValue != "Escolha um Distrito primeiro"))
-                {
-                    if (parameters.Count > 0) command += " AND ";
-                    command += "C.Id = @ConcelhoId";
-                    parameters.Add(new SqlParameter("@ConcelhoId", listConcelho.SelectedValue));
-                }
             }
+
+            command += " order by LocalID DESC";
 
             DataTable resultadoPesquisa = new DataTable();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -175,7 +179,9 @@ namespace Final_project
         {
             currentPage = 0;
             ViewState["contador"] = currentPage;
-            GetLocais();
+
+            System.Diagnostics.Debug.WriteLine(searching);
+            buttonPesquisar_Click(null, null);
         }
 
         protected void linkPrevious_click(object sender, EventArgs e)
@@ -196,7 +202,7 @@ namespace Final_project
 
         protected void linkLast_click(object sender, EventArgs e)
         {
-            currentPage = (int)ViewState["total"] - 1;
+            currentPage = (int)ViewState["total"] - 2;
             currentPage += 1;
             ViewState["contador"] = currentPage;
             BindListLocais((DataTable)ViewState["dataSource"]);

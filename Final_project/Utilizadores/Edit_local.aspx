@@ -74,6 +74,8 @@
 
     <asp:Button ID="eliminate_photo_button" runat="server" class="btn-dark" Text="Eliminar foto"  style="padding: 5px 15px;" OnClick="button_eliminate_photo"/>
 
-    <asp:Button ID="cancel_everything_button" runat="server" class="btn-dark" Text="Cancelar"  style="padding: 5px 15px;" OnClick="buttonCancelar_Click"/>
+    <asp:Button ID="cancel_everything_button" runat="server" class="btn-dark" Text="Cancelar foto"  style="padding: 5px 15px;" OnClick="button_cancel_photo"/>
+
+    <asp:Button ID="Button1" runat="server" class="btn-dark" Text="Eliminar local"  style="padding: 5px 15px;" OnClick="eliminate_local"/>
 
 </asp:Content>

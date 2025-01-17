@@ -15,13 +15,13 @@ namespace Final_project.Utilizadores
     {
 
         /// <summary>
-        /// Label1 control.
+        /// Label_local control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label Label_local;
 
         /// <summary>
         /// text_name control.
@@ -78,6 +78,24 @@ namespace Final_project.Utilizadores
         protected global::System.Web.UI.WebControls.DropDownList list_council;
 
         /// <summary>
+        /// latitude control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField latitude;
+
+        /// <summary>
+        /// longitude control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField longitude;
+
+        /// <summary>
         /// save_button control.
         /// </summary>
         /// <remarks>
@@ -96,13 +114,13 @@ namespace Final_project.Utilizadores
         protected global::System.Web.UI.WebControls.Button cancel_button;
 
         /// <summary>
-        /// Label2 control.
+        /// Label_photos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label Label_photos;
 
         /// <summary>
         /// list_photos control.
@@ -166,5 +184,14 @@ namespace Final_project.Utilizadores
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button cancel_everything_button;
+
+        /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
     }
 }
