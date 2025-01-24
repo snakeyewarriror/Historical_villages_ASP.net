@@ -63,7 +63,4 @@
             </div>
          </ItemTemplate>
     </asp:DataList>
-
-    <a href="Utilizadores/Personal_area.aspx">click here to go to personal area</a>
-    <a href="Utilizadores/Add_local.aspx">click here to go to add place</a>
 </asp:Content>

@@ -15,15 +15,6 @@ namespace Final_project.Utilizadores
     {
 
         /// <summary>
-        /// Label_local control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label_local;
-
-        /// <summary>
         /// text_name control.
         /// </summary>
         /// <remarks>

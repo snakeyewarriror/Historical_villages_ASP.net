@@ -21,7 +21,7 @@ namespace Final_project.Utilizadores
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    //1 - ler dados do local
+                    // 1 - Read local data
                     SqlCommand command = new SqlCommand();
                     command.Connection = connection;
                     command.CommandText = " SELECT L.Nome, L.Morada, L.Localidade, L.Descricao, " +
@@ -30,12 +30,12 @@ namespace Final_project.Utilizadores
                     command.Parameters.AddWithValue("@local", Session["id_local"]);
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
-                    //variáveis a utilizar na seleção do concelho e respetivo distrito
+
+                    // Variables to select distrito and concelho
                     string idDistrito = "", idConcelho = "";
                     while (reader.Read())
                     {
                         text_name.Text = reader.GetString(0);
-                        //textNome.Text = reader.GetString(0);
                         text_address.Text = reader.GetValue(1)?.ToString() ?? string.Empty;
                         text_town.Text = reader.GetString(2);
                         text_description.Text = reader.GetString(3);
@@ -46,23 +46,23 @@ namespace Final_project.Utilizadores
                     connection.Close();
 
 
-                    //2 - carregar distritos
+                    // 2 - Load distritos
                     load_distritos();
 
-                    //selecionar o distrito
+                    // Select district
                     if (list_district.Items.FindByValue(idDistrito) != null)
                     {
                         list_district.SelectedValue = idDistrito;
-                        listDistrito_SelectedIndexChanged(null, null); // atualiza os concelhos
+                        listDistrito_SelectedIndexChanged(null, null); // Update concelhos
                     }
 
-                    //3 - selecionar o concelho
+                    // 3 - Select concelhos
                     if (list_council.Items.FindByValue(idConcelho) != null)
                     {
                         list_council.SelectedValue = idConcelho;
                     }
 
-                    //4 - carregar 
+                    //4 - Load 
                     GetFotosLocal(Session["id_local"].ToString());
                 }
             }
@@ -218,6 +218,7 @@ namespace Final_project.Utilizadores
                         + "\".png\", \".gif\" ou \".tiff.');</script>");
                         return;
                     }
+                    text_legend.Text = string.Empty;
                 }
             }
 
@@ -364,27 +365,6 @@ namespace Final_project.Utilizadores
 
         }
 
-        protected void clear_fields()
-        {
-            text_name.Text = string.Empty;
-            text_description.Text = string.Empty;
-            text_address.Text = string.Empty;
-            text_town.Text = string.Empty;
-            text_legend.Text = string.Empty;
-
-
-            list_council.Items.Clear();
-            list_council.Items.Insert(0, "Escolha um Distrito primeiro");
-            load_distritos();
-            ViewState["idLocal"] = 0;
-
-            // Clear the DataList by setting the DataSource to null
-            list_photos.DataSource = null;
-
-            // Bind the empty DataSource to refresh the DataList
-            list_photos.DataBind();
-
-        }
 
         protected void eliminate_local(object sender, EventArgs e)
         {
@@ -393,7 +373,7 @@ namespace Final_project.Utilizadores
             {
 
 
-                //obter nome dos ficheiros associados ao local
+                // Get the name of the file for the associated locais
                 SqlCommand command= new SqlCommand();
 
                 command.CommandText = "SELECT Ficheiro FROM Foto WHERE Local = @local";
@@ -405,14 +385,15 @@ namespace Final_project.Utilizadores
                 while (reader.Read())
                 {
                     string ficheiro = Server.MapPath("../" + reader[0].ToString());
-                    //eliminar ficheiros
+
+                    // Delete files
                     if (File.Exists(ficheiro))
                         File.Delete(ficheiro);
                 }
                 reader.Close();
 
 
-                //eliminar dados das tabelas
+                // Delete data from tables
                 SqlCommand commandLocal = new SqlCommand();
 
                 commandLocal.Connection = connection;

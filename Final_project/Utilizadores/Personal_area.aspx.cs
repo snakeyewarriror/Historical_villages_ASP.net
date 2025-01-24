@@ -43,7 +43,7 @@ namespace Final_project.Utilizadores
                 table.Load(reader);
                 reader.Close();
 
-                //mostrar dados no controlo DataList
+                // Show all data on the Datalist control
                 listLocais.DataSource = table;
                 listLocais.DataBind();
             }

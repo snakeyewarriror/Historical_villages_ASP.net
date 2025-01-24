@@ -14,9 +14,6 @@ namespace Final_project
 
         private int currentPage;
 
-        // Bool to check if the page is searching for anyhting
-        bool searching = false;
-
         private string connectionString = @"data source=.\sqlexpress; initial catalog = Locais; integrated security=true;";
 
         void LoadDistritos()
@@ -101,8 +98,6 @@ namespace Final_project
                 (!string.IsNullOrEmpty(listConcelho.SelectedValue) && listConcelho.SelectedValue != "Escolha um Distrito primeiro"))
             {
 
-                searching = true;
-                System.Diagnostics.Debug.WriteLine(searching);
                 command += " WHERE ";
                 if (!string.IsNullOrWhiteSpace(textNome.Text))
                 {
@@ -110,11 +105,19 @@ namespace Final_project
                     command += "L.Nome LIKE @Nome";
                     parameters.Add(new SqlParameter("@Nome", "%" + textNome.Text.Trim() + "%"));
                 }
+
                 if (listDistrito.SelectedValue != "Selecione um Distrito")
                 {
                     if (parameters.Count > 0) command += " AND ";
                     command += "D.Id = @DistritoId";
                     parameters.Add(new SqlParameter("@DistritoId", listDistrito.SelectedValue));
+                }
+
+                if (listConcelho.SelectedValue != "Selecione um Distrito" && listConcelho.SelectedValue != "Escolha um Distrito primeiro")
+                {
+                    if (parameters.Count > 0) command += " AND ";
+                    command += "C.Id = @ConcelhoId";
+                    parameters.Add(new SqlParameter("@ConcelhoId", listConcelho.SelectedValue));
                 }
             }
 
@@ -179,8 +182,6 @@ namespace Final_project
         {
             currentPage = 0;
             ViewState["contador"] = currentPage;
-
-            System.Diagnostics.Debug.WriteLine(searching);
             buttonPesquisar_Click(null, null);
         }
 

@@ -6,7 +6,7 @@
     <asp:Label ID="Label1" runat="server" Text="Criar Local"></asp:Label>
 
     Nome<asp:TextBox ID="text_name" runat="server"></asp:TextBox>
-    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="text_name" runat="server" Display="Dynamic" ForeColor="#CC0000" />
+    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="text_name" runat="server" Display="Dynamic" ForeColor="#CC0000" SetFocusOnError="true" />
 
     Descrição<asp:TextBox ID="text_description" runat="server"></asp:TextBox>
 
@@ -16,12 +16,12 @@
 
     Distrito<asp:DropDownList ID="list_district" runat="server" AutoPostBack="true" OnSelectedIndexChanged="listDistrito_SelectedIndexChanged" style="width: 200px;"></asp:DropDownList>
     <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="list_district" InitialValue="Selecione um Distrito"
-        runat="server" Display="Dynamic" ForeColor="#CC0000" />
+        runat="server" Display="Dynamic" ForeColor="#CC0000" SetFocusOnError="true" />
     <br />
 
     Concelho<asp:DropDownList ID="list_council" runat="server" style="width: 250px;"></asp:DropDownList>
     <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="list_council" InitialValue="Selecione um Concelho"
-        runat="server" Display="Dynamic" ForeColor="#CC0000" />
+        runat="server" Display="Dynamic" ForeColor="#CC0000" SetFocusOnError="true" />
 
     <br />
     <br />

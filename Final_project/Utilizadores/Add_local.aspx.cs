@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -78,6 +81,17 @@ namespace Final_project.Utilizadores
             }
         }
 
+        public class Datum
+        {
+            public double? latitude { get; set; }
+            public double? longitude { get; set; }
+        }
+
+        public class Root
+        {
+            public List<Datum> data { get; set; }
+        }
+
 
         protected void button_save_local(object sender, EventArgs e)
         {
@@ -91,17 +105,87 @@ namespace Final_project.Utilizadores
 
                 command.Parameters.AddWithValue("@nome", text_name.Text);
                 command.Parameters.AddWithValue("@descricao", text_description.Text);
+
                 if (text_address.Text == "")
                     command.Parameters.AddWithValue("@morada", DBNull.Value);
                 else
                     command.Parameters.AddWithValue("@morada", text_address.Text);
+
                 command.Parameters.AddWithValue("@localidade", text_town.Text);
                 command.Parameters.AddWithValue("@concelho", list_council.SelectedValue);
                 command.Parameters.AddWithValue("@utilizador", Session["id_utilizador"]);
 
-                command.Parameters.AddWithValue("@latitude", latitude.Value);
-                command.Parameters.AddWithValue("@longitude", longitude.Value);
-                
+
+                // Checks if the user has selected anything on the map and if they didn´t, the api
+                // gets the latitude and longitude based on the selected Distrito and Concelho
+                if (string.IsNullOrEmpty(latitude.Value) && string.IsNullOrEmpty(longitude.Value))
+                {
+
+                    // Get latitue and longitude if the field is empty
+                    Datum localizacao = new Datum();
+                    string key = ConfigurationManager.AppSettings["APIKey"];
+                    string local = "";
+
+
+                    if (text_town.Text == "")
+                    {
+                        connection.Open();
+
+                        SqlCommand cmd = new SqlCommand("SELECT Nome FROM Concelho WHERE Id = @ID", connection);
+                        cmd.Parameters.AddWithValue("@ID", list_council.SelectedValue);
+
+
+                        // Execute the query and retrieve the result
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                local = $"{reader["Nome"]},Portugal";
+                            }
+                        }
+
+                        connection.Close();
+                    }
+
+                    else
+                    {
+                        local = $"{text_town.Text},Portugal";
+                    }
+
+                    WebRequest request = WebRequest.Create($"https://api.positionstack.com/v1/forward?access_key={key}&query={local}");
+                    WebResponse response = request.GetResponse();
+
+                    if (response != null)
+                    {
+                        Stream stream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(stream);
+                        string json = reader.ReadToEnd();
+                        Root result = JsonConvert.DeserializeObject<Root>(json);
+
+
+                        
+                        if (result.data != null && result.data.Count > 0)
+                        {
+                            localizacao = result.data[0];
+                            command.Parameters.AddWithValue("@latitude", localizacao.latitude);
+                            command.Parameters.AddWithValue("@longitude", localizacao.longitude);
+
+                        }
+
+
+                        else
+                        {
+                            command.Parameters.AddWithValue("@latitude", DBNull.Value);
+                            command.Parameters.AddWithValue("@longitude", DBNull.Value);
+                        }
+                    }
+                }
+
+                else
+                {
+                    command.Parameters.AddWithValue("@latitude", latitude.Value);
+                    command.Parameters.AddWithValue("@longitude", longitude.Value);
+                }
 
                 connection.Open();
 
@@ -194,6 +278,8 @@ namespace Final_project.Utilizadores
                             return;
                         }
                     }
+
+                    text_legend.Text = string.Empty;
                 }
             }
 

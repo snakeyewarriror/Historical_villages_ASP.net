@@ -16,7 +16,8 @@
                     <label for="TextBoxUsername" class="form-label">Nome de Utilizador</label>
                     <asp:TextBox runat="server" ID="TextBoxUsername" class="form-control" placeholder="Insira o seu nome" />
 
-                    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="TextBoxUsername" runat="server" Display="Dynamic" ForeColor="#CC0000" />
+                    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="TextBoxUsername" runat="server" Display="Dynamic" ForeColor="#CC0000"
+                        SetFocusOnError="true" />
 
                     <!-- Label for error message -->
                     <asp:Label ID="LabelErrorMessage" runat="server" ForeColor="Red" Visible="false"></asp:Label>
@@ -28,7 +29,7 @@
                     <label for="TextBoxEmail" class="form-label">Email</label>
                     <asp:TextBox ID="TextBoxEmail" runat="server" class="form-control" placeholder=" Insira o seu email" />
 
-                    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="TextBoxEmail" runat="server" Display="Dynamic" ForeColor="#CC0000" />
+                    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="TextBoxEmail" runat="server" Display="Dynamic" ForeColor="#CC0000" SetFocusOnError="true" />
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ErrorMessage="Insira um formato de email valido"
                         ControlToValidate="TextBoxEmail" ForeColor="Red" Operator="DataTypeCheck" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
                         Display="Dynamic" />
@@ -40,7 +41,7 @@
                     <label for="TextBoxDate" class="form-label">Data de nascimento</label>
                     <asp:TextBox ID="TextBoxDate" class="form-control" runat="server" TextMode="Date"></asp:TextBox>
 
-                    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="TextBoxDate" runat="server" Display="Dynamic" ForeColor="#CC0000" />
+                    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="TextBoxDate" runat="server" Display="Dynamic" ForeColor="#CC0000" SetFocusOnError="true" />
                     <asp:CompareValidator ID="validarDataNascimento" runat="server" ControlToValidate="TextBoxDate"/>
                 </div>
 
@@ -60,7 +61,7 @@
                         A password tem de ter pelo menos 6 charaters.
                     </small>
 
-                    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="password" runat="server" Display="Dynamic" ForeColor="#CC0000" />
+                    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="password" runat="server" Display="Dynamic" ForeColor="#CC0000" SetFocusOnError="true" />
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ErrorMessage="A password tem de ter pelo menos 6 charaters"
                         ControlToValidate="password" ForeColor="Red" Operator="DataTypeCheck" ValidationExpression="^\d{6,}$" />
                 </div>
@@ -78,7 +79,8 @@
                         </button>
                     </div>
 
-                    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="passwordConfirmation" runat="server" Display="Dynamic" ForeColor="#CC0000" />
+                    <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="passwordConfirmation" runat="server" Display="Dynamic" ForeColor="#CC0000"
+                        SetFocusOnError="true" />
                     <asp:CompareValidator ID="CompareValidator2" runat="server" ErrorMessage="As passwords não são iguais" ForeColor="#CC0000"
                         ControlToCompare="password" ControlToValidate="passwordConfirmation" />
                 </div>

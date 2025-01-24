@@ -126,6 +126,8 @@ namespace Final_project
                         reader.Close();
                         connection.Close();
                     }
+
+                    ObterComentarios();
                 }
             }
             currentPage = (int)ViewState["contador"];

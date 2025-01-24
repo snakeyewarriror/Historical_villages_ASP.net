@@ -40,6 +40,9 @@
         </main> 
     </div>
 
+    <br/>
+    <br/>
+
     <div class="container">
 
       <!-- Section Information text -->
@@ -51,42 +54,89 @@
 
             <br/><br/>
 
-            <!-- Comments list -->
-            <asp:DataList runat="server" ID="listComentarios" CssClass="mt-3">
-                <ItemTemplate>
-                    <table class="table table-borderless mb-2">
+            <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePartialRendering="true"></asp:ScriptManager>
+            <asp:UpdatePanel ID="UpdateComments" runat="server">
+                <ContentTemplate>
+                    <!-- Comments list -->
+                    <asp:DataList runat="server" ID="listComentarios" CssClass="mt-3">
+                        <ItemTemplate>
+                            <table class="table table-borderless mb-2">
 
-                        <tr style="height: auto; padding-bottom: 20px;">
-                            <td>
-                                <asp:Label ID="comentario" runat="server"
-                                Text='<%# Eval("comentario") %>' />
+                                <tr style="height: auto; padding-bottom: 20px;">
+                                    <td>
+                                        <asp:Label ID="comentario" runat="server"
+                                        Text='<%# Eval("comentario") %>' />
 
-                                <br /><br />
+                                        <br /><br />
 
-                                <asp:Label Text='<%# "Classificação - " + Eval("classificacao")?.ToString() %>' runat="server" />
-                            </td>
-                        </tr>
+                                        <asp:Label Text='<%# "Classificação - " + Eval("classificacao")?.ToString() %>' runat="server" />
+                                    </td>
+                                </tr>
 
-                        <tr style="vertical-align: middle; height: 40px;">
-                            <td>
-                                <asp:Label ID="utilizador" runat="server" Text='<%# Eval("utilizador") %>' />
-                            </td>
-                        </tr>
+                                <tr style="vertical-align: middle; height: 40px;">
+                                    <td>
+                                        <asp:Label ID="utilizador" runat="server" Text='<%# Eval("utilizador") %>' />
+                                    </td>
+                                </tr>
 
-                    </table>
-                </ItemTemplate>
-            </asp:DataList>
+                            </table>
+                        </ItemTemplate>
+                    </asp:DataList>
 
-            <!-- Comments controls -->
-            <div class="mt-1 container text-center" style="margin-bottom:100px;">
-                <asp:LinkButton Text="Primeira" runat="server" ID="linkFirst" CssClass="text-decoration-none fs-5" OnClick="linkFirst_click" />
+                    <!-- Comments controls -->
+                    <div class="mt-1 container text-center" style="margin-bottom:100px;">
+                        <asp:LinkButton Text="Primeira" runat="server" ID="linkFirst" CssClass="text-decoration-none fs-5" OnClick="linkFirst_click" />
 
-                <asp:LinkButton Text="Anterior" runat="server" ID="linkPrevious" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkPrevious_click" />
+                        <asp:LinkButton Text="Anterior" runat="server" ID="linkPrevious" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkPrevious_click" />
 
-                <asp:LinkButton Text="Seguinte" runat="server" ID="linkNext" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkNext_click" />
+                        <asp:LinkButton Text="Seguinte" runat="server" ID="linkNext" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkNext_click" />
 
-                <asp:LinkButton Text="Última" runat="server" ID="linkLast" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkLast_click" />
-            </div>
+                        <asp:LinkButton Text="Última" runat="server" ID="linkLast" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkLast_click" />
+                    </div>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="comment_button" EventName="Click" />
+                </Triggers>
+            </asp:UpdatePanel>
+
+            <!-- Add new comments scetion -->
+            <asp:UpdatePanel ID="UpdatePanelAddComment" runat="server">
+            
+                <ContentTemplate>
+                    <div id="divComment" runat="server">
+
+                        <table class="table table-borderless">
+                            <tr style="height: 120px; vertical-align: middle">
+                                <td style="width: 900px;" colspan="2">
+                                <asp:TextBox runat="server" ID="textComentario" CssClass="form-control border-secondary w-75" Height="100" TextMode="MultiLine" />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="width: 150px">
+                                        <asp:DropDownList ID="listClassificacao" runat="server" Width="100px" CssClass="form-select w-75">
+                                            <asp:ListItem Text="1" Value="1" />
+                                            <asp:ListItem Text="2" Value="2" />
+                                            <asp:ListItem Text="3" Value="3" />
+                                            <asp:ListItem Text="4" Value="4" />
+                                            <asp:ListItem Text="5" Value="5" />
+                                            <asp:ListItem Text="6" Value="6" />
+                                            <asp:ListItem Text="7" Value="7" />
+                                            <asp:ListItem Text="8" Value="8" />
+                                            <asp:ListItem Text="9" Value="9" />
+                                            <asp:ListItem Text="10" Value="10" />
+                                        </asp:DropDownList>
+                                </td>
+
+                                <td>
+                                    <asp:Button Text="Comentar" runat="server" ID="comment_button" OnClick="button_comment" BackColor="#D7D3BF" CssClass="btn ms-3" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+            
         </div>
 
         <div class="col-2"></div> <!-- Empty collumn for extra space between -->
@@ -179,41 +229,6 @@
           </div>
         </div>
       </section>
-    </div>
-    
-    <label>Not here</label>
-    <div class="my-5" id="divComment" runat="server">
-
-        <label>GOt here</label>
-
-        <table class="table table-borderless">
-            <tr style="height: 120px; vertical-align: middle">
-                <td style="width: 900px;" colspan="2">
-                <asp:TextBox runat="server" ID="textComentario" CssClass="form-control border-secondary w-75" Height="100" TextMode="MultiLine" />
-                </td>
-            </tr>
-
-            <tr>
-                <td style="width: 150px">
-                        <asp:DropDownList ID="listClassificacao" runat="server" Width="100px" CssClass="form-select w-75">
-                            <asp:ListItem Text="1" Value="1" />
-                            <asp:ListItem Text="2" Value="2" />
-                            <asp:ListItem Text="3" Value="3" />
-                            <asp:ListItem Text="4" Value="4" />
-                            <asp:ListItem Text="5" Value="5" />
-                            <asp:ListItem Text="6" Value="6" />
-                            <asp:ListItem Text="7" Value="7" />
-                            <asp:ListItem Text="8" Value="8" />
-                            <asp:ListItem Text="9" Value="9" />
-                            <asp:ListItem Text="10" Value="10" />
-                        </asp:DropDownList>
-                </td>
-
-                <td>
-                    <asp:Button Text="Comentar" runat="server" ID="comment_button" OnClick="button_comment" BackColor="#D7D3BF" CssClass="btn ms-3" />
-                </td>
-            </tr>
-        </table>
     </div>
 
 
