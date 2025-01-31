@@ -16,7 +16,7 @@ namespace Final_project
         {
 
             // Checks if a user is logged in already
-            if(System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated && Session["id_utilizador"] == null)
             {
                 string id = "";
 

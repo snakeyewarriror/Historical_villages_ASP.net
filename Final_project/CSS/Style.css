@@ -1,4 +1,4 @@
-#nav_bg{
+#nav_bg {
     background-color: rgb(24,54,81);
 }
 
@@ -8,66 +8,119 @@
     object-fit: cover;
     width: 100%;
 }
-#logo{
-    height: 50px; 
+
+#logo {
+    height: 50px;
     width: 50px;
     margin-left: 2%;
     margin-right: 2%;
     margin-top: 04px;
 }
 
-#castle_svg{
-    height: 50px; 
+#castle_svg {
+    height: 50px;
     width: 50px;
     margin-bottom: 20px;
     filter: invert(1) brightness(0.85);
 }
 
-#carousel_titles{
+#carousel_titles {
     font-size: 25px;
 }
 
-#footer_bg{
+#footer_bg {
     background-color: rgb(24,54,81);
 }
 
-#carousel_fade{
+#carousel_fade {
     height: max-content;
     mask-image: linear-gradient(black 70%, transparent);
+}
 
+.buttons_default {
+    background-color: rgb(45, 98, 147);
+    color: white;
+    cursor: pointer;
+    border: none;
 }
 
 
-.fadeInUp{
+/* Style for DropDownList */
+.dropdown-default {
+    width: 200px; /* Adjust width as needed */
+    height: 40px; /* Set a height for the dropdown box */
+    padding: 5px; /* Optional padding inside the dropdown */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #ccc;
+    background-color: white;
+}
+
+/* Style for TextBox */
+.textbox-default {
+    width: 400px; /* Adjust width as needed */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #ccc;
+}
+
+
+/* Style for TextBox */
+.textbox_default_add {
+    width: 350px; /* Adjust width as needed */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #ccc;
+}
+
+
+/* Add_local page Css */
+
+#map {
+    height: 400px;
+    width: 40%;
+}
+
+.form_row {
+    gap: 15px; /* Adjust the gap between label and input */
+    font-weight: 500;
+}
+
+    .form_row label {
+        margin-left: 15px;
+        margin-right: 5px;
+    }
+
+
+.fadeInUp {
     -webkit-animation: fadeInUp 1.2s both;
     animation: fadeInUp 1.2s both;
 }
 
-ul{
+ul {
     list-style: none;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
 @-webkit-keyframes fadeInUp {
-    0%{
+    0% {
         opacity: 0;
         -webkit-transform: translatey(100px);
     }
-    100%{
+
+    100% {
         opacity: 1;
         -webkit-transform: translatey(0px);
     }
 }
 
 @keyframes fadeInUp {
-    0%{
+    0% {
         opacity: 0;
         transform: translatey(100px);
     }
-    100%{
+
+    100% {
         opacity: 1;
         transform: translatey(0px);
     }
@@ -75,28 +128,30 @@ a{
 
 
 
-.fadeInLeft{
+.fadeInLeft {
     -webkit-animation: fadeInLeft 1.1s both;
     animation: fadeInLeft 1.1s both;
 }
 
 @-webkit-keyframes fadeInLeft {
-    0%{
+    0% {
         opacity: 0;
         -webkit-transform: translateX(-100px);
     }
-    100%{
+
+    100% {
         opacity: 1;
         -webkit-transform: translateX(0px);
     }
 }
 
 @keyframes fadeInLeft {
-    0%{
+    0% {
         opacity: 0;
         transform: translateX(-100px);
     }
-    100%{
+
+    100% {
         opacity: 1;
         transform: translateX(0px);
     }
@@ -110,4 +165,38 @@ a{
 input[type="checkbox"]:checked {
     background-color: rgb(24,54,81);
     border: 1px solid rgb(24,54,81);
-  }
+}
+
+/*SELECIONA OS TR E TD NO HTML, QUE FORAM GERADOS AUTOMATICAMENTE PELA DATALIST E CORRIGE-OS*/
+#ContentPlaceHolder1_listLocais tbody tr, #ContentPlaceHolder1_listLocais tbody tr td, #ContentPlaceHolder1_listLocais tbody tr td a {
+    display: flex;
+}
+
+#ContentPlaceHolder1_listLocais tbody tr {
+    gap: 16px;
+}
+
+    #ContentPlaceHolder1_listLocais tbody tr td {
+        flex: 1;
+    }
+
+        #ContentPlaceHolder1_listLocais tbody tr td a {
+            flex-direction: column;
+        }
+
+.imagem-card-local-wrap{
+    height:240px;
+    overflow:hidden;
+}
+.imagem-card-local {
+    width: 100%;
+    display: block;
+}
+
+
+@media only screen and (max-width: 900px) {
+    .imagem-card-local-wrap {
+        height: auto;
+        overflow: auto;
+    }
+}

@@ -12,6 +12,9 @@ namespace Final_project.Utilizadores
 {
     public partial class Edit_local : System.Web.UI.Page
     {
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+        public string Nome { get; set; }
 
         private string connectionString = @"data source=.\sqlexpress; initial catalog = Locais; integrated security=true;";
 
@@ -25,7 +28,7 @@ namespace Final_project.Utilizadores
                     SqlCommand command = new SqlCommand();
                     command.Connection = connection;
                     command.CommandText = " SELECT L.Nome, L.Morada, L.Localidade, L.Descricao, " +
-                     "CAST(L.Concelho AS NVARCHAR), CAST(C.Distrito AS NVARCHAR) " +
+                     "CAST(L.Concelho AS NVARCHAR), CAST(C.Distrito AS NVARCHAR), L.Latitude, L.Longitude " +
                      "FROM Local L JOIN Concelho C ON L.Concelho = C.Id WHERE L.Id = @local";
                     command.Parameters.AddWithValue("@local", Session["id_local"]);
                     connection.Open();
@@ -41,6 +44,10 @@ namespace Final_project.Utilizadores
                         text_description.Text = reader.GetString(3);
                         idConcelho = reader.GetString(4).ToString();
                         idDistrito = reader.GetString(5).ToString();
+
+                        Nome = reader.GetString(0);
+                        Latitude = reader[6].ToString();
+                        Longitude = reader[7].ToString();
                     }
                     reader.Close();
                     connection.Close();

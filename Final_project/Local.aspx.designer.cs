@@ -15,24 +15,6 @@ namespace Final_project
     {
 
         /// <summary>
-        /// nameLocal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label nameLocal;
-
-        /// <summary>
-        /// localization control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label localization;
-
-        /// <summary>
         /// listLocais control.
         /// </summary>
         /// <remarks>
@@ -157,5 +139,14 @@ namespace Final_project
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label description;
+
+        /// <summary>
+        /// district_name_hidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField district_name_hidden;
     }
 }

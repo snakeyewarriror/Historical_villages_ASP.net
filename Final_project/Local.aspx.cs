@@ -40,7 +40,6 @@ namespace Final_project
 
                 if (i > 0)
                 {
-                    System.Diagnostics.Debug.WriteLine("\n\n\n\n here");
                     return false;
                 }
 
@@ -108,7 +107,7 @@ namespace Final_project
                         SqlDataReader reader = commandDados.ExecuteReader();
                         while (reader.Read())
                         {
-                            nameLocal.Text = !reader.IsDBNull(0) ? reader.GetString(0) : "Sem Nome disponivel";
+                            //nameLocal.Text = !reader.IsDBNull(0) ? reader.GetString(0) : "Sem Nome disponivel";
                             description.Text = !reader.IsDBNull(1) ? reader.GetString(1) : "Sem Descrição disponivel";
 
                             string localidade = !reader.IsDBNull(2) ? reader.GetString(2) : "Sem Localidade";
@@ -121,7 +120,9 @@ namespace Final_project
 
                             Concelho = concelho;
 
-                            localization.Text = $"{localidade} | {concelho} | {distrito}";
+                            district_name_hidden.Value = distrito;
+
+                            //localization.Text = $"{localidade} | {concelho} | {distrito}";
                         }
                         reader.Close();
                         connection.Close();

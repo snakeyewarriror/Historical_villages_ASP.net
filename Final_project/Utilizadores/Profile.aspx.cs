@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
+using System.Web.Security;
 
 namespace Final_project.Utilizadores
 {
@@ -17,6 +18,8 @@ namespace Final_project.Utilizadores
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
             if (!IsPostBack)
             {
                 LoadInfo();
@@ -32,7 +35,6 @@ namespace Final_project.Utilizadores
                 using(SqlCommand command = new SqlCommand())
                 {
 
-                    
                     command.Connection = connection;
                     connection.Open();
 
@@ -66,6 +68,9 @@ namespace Final_project.Utilizadores
 
                     transaction.Commit();
                     connection.Close();
+
+                    LoadUserId();
+
                 }
             }
         }
@@ -74,6 +79,8 @@ namespace Final_project.Utilizadores
         {
 
             string user_id = Session["id_utilizador"].ToString();
+
+
             using (SqlConnection connection = new SqlConnection(connection_string))
             {
                 // 1 - Read local data
@@ -98,6 +105,40 @@ namespace Final_project.Utilizadores
                 }
             }
         }
+
+
+        protected void LoadUserId()
+        {
+            // Get the user name from the login field - Membership
+            MembershipUser user = Membership.GetUser(TextBoxUsername.Text);
+
+            // Login de utilizador - obter ID (chave primária - Utilizador) e colocar em Session
+
+            string id = "";
+
+            using (SqlConnection connection = new SqlConnection(connection_string))
+            {
+
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT Id FROM Utilizador WHERE ID = @user_id";
+                    command.Parameters.AddWithValue("@user_id", user.ProviderUserKey.ToString());
+                    connection.Open();
+                    SqlDataReader reader;
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        id = reader[0].ToString();
+                    }
+                    connection.Close();
+                }
+            }
+
+            Session["id_utilizador"] = id;
+        }
+
+
 
     }
 }

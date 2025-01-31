@@ -121,7 +121,7 @@ namespace Final_project.Utilizadores
                 if (string.IsNullOrEmpty(latitude.Value) && string.IsNullOrEmpty(longitude.Value))
                 {
 
-                    // Get latitue and longitude if the field is empty
+                    // Get latitude and longitude if the field is empty
                     Datum localizacao = new Datum();
                     string key = ConfigurationManager.AppSettings["APIKey"];
                     string local = "";

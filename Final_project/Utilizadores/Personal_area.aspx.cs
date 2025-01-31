@@ -66,7 +66,7 @@ namespace Final_project.Utilizadores
                     // Puts the photo ID on the viewstate
                     ViewState["idFoto"] = e.CommandArgument.ToString();
 
-                    // Selects the Legenda fro mthe selected photo
+                    // Selects the Legenda from the selected photo
                     SqlCommand commandFoto = new SqlCommand();
                     commandFoto.Connection = connection;
                     commandFoto.CommandText = "SELECT Legenda FROM Foto WHERE Id = @id";

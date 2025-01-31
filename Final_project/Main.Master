@@ -10,9 +10,9 @@
 
     <!-- CSS -->
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="CSS/Style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
     <link href="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.2.0/dist/css/coreui.min.css" rel="stylesheet" integrity="sha384-u3h5SFn5baVOWbh8UkOrAaLXttgSF0vXI15ODtCSxl0v/VKivnCN6iHCcvlyTL7L" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
 
     <!-- Javascript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"> </script>
@@ -23,13 +23,12 @@
 
 <body>
 
-    <form id="form1" runat="server">
+    <form id="form1" runat="server" class="d-flex flex-column min-vh-100">
 
-        <div class="d-flex flex-column min-vh-100">
 
             <!-- Header --> 
-            <div class="container-fluid">
-                <header class="row mt-3">
+            <header class="container-fluid">
+                <div class="row mt-3">
                     <div class="d-flex justify-content-center mt-4 col-12">
 
                         <img src="../Imagens/Logos/logo.png" alt="logo" id="logo">
@@ -37,7 +36,7 @@
                         <img src="../Imagens/Logos/logo.png" alt="logo" id="logo">
 
                     </div> 
-                </header>
+                </div>
 
                 <!-- Navbar -->
 
@@ -99,21 +98,20 @@
 
                     </div>
                 </nav>
-            </div>
+            </header>
 
 
             <!-- Placeholder content -->
-            <div class="container-fluid flex-grow-1">
+            <main class="container-fluid flex-grow-1">
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                 </asp:ContentPlaceHolder>
-            </div>
+            </main>
 
     
             <!-- Footer -->
 
-            <div class="container-fluid">
-                <footer class="row text-center mt-5" id="footer_bg">
-  
+            <footer class="container-fluid text-center mt-5" id="footer_bg">  
+                <div class="row">
                     <ul class="nav justify-content-center mt-1">
                         <li class="nav-item"> <a href="../Main_page.aspx" class="nav-link px-2 text-white">Home</a></li>
                         <li class="nav-item"> <a href="#" class="nav-link px-2 text-white">Features</a></li>
@@ -125,11 +123,9 @@
                   <hr class="border-white" style="width: 50%; margin: 8px auto;"> <!-- Divider -->
   
                   <p class="text-center text-white">Programação Web Servidor</p>
-                </footer>
-            </div>
-        
-        </div>
-    <script src="Javascript/Script.js"></script>
+               </div>
+            </footer>
+   
     <script src="https://cdn.jsdelivr.net/npm/@coreui/coreui@5.2.0/dist/js/coreui.bundle.min.js" integrity="sha384-JdRP5GRWP6APhoVS1OM/pOKMWe7q9q8hpl+J2nhCfVJKoS+yzGtELC5REIYKrymn" crossorigin="anonymous"></script>
     </form>
 </body>

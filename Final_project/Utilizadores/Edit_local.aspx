@@ -1,5 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Edit_local.aspx.cs" Inherits="Final_project.Utilizadores.Edit_local" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -23,6 +28,18 @@
     <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="list_council" InitialValue="Selecione um Concelho"
         runat="server" Display="Dynamic" ForeColor="#CC0000" SetFocusOnError="true" />
 
+    <br />
+    <br />
+
+    
+
+    <h3 class="mt-2">Clique no mapa onde o local esta localizado</h3>
+
+    <div id="map" style="width: 40%; height: 640px"></div>
+    <asp:HiddenField ID="latitude" runat="server" />
+    <asp:HiddenField ID="longitude" runat="server" />
+
+    
     <br />
     <br />
 
@@ -77,5 +94,48 @@
     <asp:Button ID="cancel_everything_button" runat="server" class="btn-dark" Text="Cancelar foto"  style="padding: 5px 15px;" OnClick="button_cancel_photo"/>
 
     <asp:Button ID="Button1" runat="server" class="btn-dark" Text="Eliminar local"  style="padding: 5px 15px;" OnClick="eliminate_local"/>
+
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+    <script>
+        // Get the values of the definined properties from the Load event with the values from the table
+        var lat = parseFloat('<%= Latitude %>') || 39.69484; // Default value if there is no value on the database
+        var lng = parseFloat('<%= Longitude %>') || -8.13031;
+        var name = '<%= Nome %>';
+        
+
+        let mapOptions = {
+            center: [lat, lng],
+            zoom: 11
+        };
+
+        let map = new L.map('map', mapOptions);
+        let layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 15 });
+        map.addLayer(layer);
+
+        // Create popup
+        let marker = L.marker([lat, lng]).addTo(map).bindPopup(name).openPopup();
+
+
+        // Identify the hidden fields in the form
+        const latitudeField = '<%= latitude.ClientID %>';
+        const longitudeField = '<%= longitude.ClientID %>';
+
+        map.on('click', (event) => {
+            if (marker !== null) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker([event.latlng.lat, event.latlng.lng]).addTo(map);
+
+            // Put the values of latitude/longitude on the hiddenfields
+            document.getElementById(latitudeField).value = event.latlng.lat;
+            document.getElementById(longitudeField).value = event.latlng.lng;
+        })
+
+
+        
+    </script>
 
 </asp:Content>

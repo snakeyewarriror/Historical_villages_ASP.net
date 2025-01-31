@@ -1,66 +1,63 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="Main_page.aspx.cs" Inherits="Final_project.Main_page" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <asp:DataList ID="listLocais" runat="server" DataKeyField="LocalID" RepeatDirection="Horizontal"
-        RepeatColumns="3" CssClass="m-5" Width="100%">
-        <ItemTemplate>
+    <section class="row">
 
-            <table style="margin-bottom: 60px; border-collapse:collapse;">
-                <tr>
-                    <td style="height: 50px; width: 180px; margin-left: 10px;">
-                        <a href='<%# "Local.aspx?id=" + Eval("LocalID") %>' class="link" style="text-decoration: none;">
-                            <asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("PrimeiraFoto") %>' Height="260" />
-                        </a>
-                    </td>
-                </tr>
+        <div class="col-9">
+            <asp:DataList ID="listLocais" runat="server" DataKeyField="LocalID" RepeatDirection="Horizontal"
+                RepeatColumns="3" CssClass="m-5">
+                <ItemTemplate>
+                    <a href='<%# "Local.aspx?id=" + Eval("LocalID") %>' class="link" style="text-decoration: none;">
+                        <div class="imagem-card-local-wrap mb-3 mt-5">
+                            <asp:Image CssClass="imagem-card-local" ID="Image1" runat="server" ImageUrl='<%# string.IsNullOrEmpty(Eval("PrimeiraFoto") as string) ? "~/Imagens/default.jpeg" : Eval("PrimeiraFoto") %>' />
 
-                <tr>
-                    <td style="padding-top: 30px">
-                        <a href='<%# "Local.aspx?id=" + Eval("LocalID") %>' class="link" style="text-decoration: none;">
-                            <asp:Label ID="Label4" runat="server" Text='<%# Eval("NomeLocal") %>' />
-                        </a>
-                    </td>
-                </tr>
+                        </div>
+                        <asp:Label ID="Label4" runat="server" Text='<%# Eval("NomeLocal") %>' />
+                        <div>
+                            <asp:Label ID="Label5" runat="server" Text='<%# Eval("Concelho") + "," %>' />
+                            <asp:Label ID="Label1" runat="server" Text='<%# Eval("Distrito") %>' />
+                        </div>
+                    </a>
+                </ItemTemplate>
+            </asp:DataList>
 
-                <tr>
-                    <td>
-                        <asp:Label ID="Label5" runat="server" Text='<%# Eval("Concelho") + ",&#160;&#160;&#160;" + Eval("Distrito") %>' />
-                    </td>
-                </tr>
+            <div class="mt-1 text-center">
+                <asp:LinkButton Text="Primeira" runat="server" ID="linkFirst" CssClass="text-decoration-none fs-5" OnClick="linkFirst_click" />
 
-            </table>
-        </ItemTemplate>
-    </asp:DataList>
+                <asp:LinkButton Text="Anterior" runat="server" ID="linkPrevious" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkPrevious_click" />
 
-    <div class="mt-1 container text-center" style="margin-bottom:100px;">
-        <asp:LinkButton Text="Primeira" runat="server" ID="linkFirst" CssClass="text-decoration-none fs-5" OnClick="linkFirst_click" />
+                <asp:LinkButton Text="Seguinte" runat="server" ID="linkNext" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkNext_click" />
 
-        <asp:LinkButton Text="Anterior" runat="server" ID="linkPrevious" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkPrevious_click" />
-
-        <asp:LinkButton Text="Seguinte" runat="server" ID="linkNext" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkNext_click" />
-
-        <asp:LinkButton Text="Última" runat="server" ID="linkLast" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkLast_click" />
-    </div>
-
-    <asp:DataList ID="listLocaisTop" runat="server" RepeatDirection="Vertical" CellPadding="10">
-        <ItemTemplate>
-            <div style="text-align: center; margin-bottom: 20px;">
-
-                <div style="font-size: 16px; font-weight: bold; margin-bottom: 5px;">
-                    <span style="color: #555;">#<%# Eval("NumeroOrdem") %>:</span>
-                    <a href='local.aspx?id=<%# Eval("LocalId") %>' style="text-decoration: none; color: #333;"> <%# Eval("LocalNome") %> </a>
-                </div>
-
-                <a href='local.aspx?id=<%# Eval("LocalId") %>'>
-                    <img src='<%# Eval("PrimeiraImagem") %>' alt='<%# Eval("LocalNome") %>' style="max-width: 80%; height: auto; border: 1px solid #ccc;" />
-                </a>
-
-                <div style="margin-top: 10px; font-size: 14px; color: #666; text-align: right; padding-right:35px;">
-                 Classificação: <%# Eval("MediaClassificacao") %>
-                </div>
+                <asp:LinkButton Text="Última" runat="server" ID="linkLast" CssClass="ms-3 text-decoration-none fs-5" OnClick="linkLast_click" />
             </div>
-         </ItemTemplate>
-    </asp:DataList>
+        </div>
+
+        <div class="col-3" style="text-align:center">
+            
+            <label class="mt-4 h4"> Melhores locais para ir</label>
+
+            <asp:DataList ID="listLocaisTop" runat="server" RepeatDirection="Vertical" CellPadding="10">
+                <ItemTemplate>
+                    <div class="mb-2">
+
+                        <a href='local.aspx?id=<%# Eval("LocalId") %>' style="text-decoration: none;">
+                            <div class="mb-2" style="font-size: 16px; font-weight: bold;">
+                                <span style="color: #555;">#<%# Eval("NumeroOrdem") %>:</span>
+                                <span style="color: #333;"><%# Eval("LocalNome") %> </span>
+                            </div>
+                            <img src='<%# Eval("PrimeiraImagem") %>' alt='<%# Eval("LocalNome") %>' style="display:block ; width:100%; border: 1px solid #ccc;" />
+
+                            <div class="mt-2" style="font-size: 14px; color: #666;">
+                                Classificação: <%# Eval("MediaClassificacao") %>
+                            </div>
+                        </a>
+                    </div>
+                </ItemTemplate>
+            </asp:DataList>
+        </div>
+    </section>
 </asp:Content>

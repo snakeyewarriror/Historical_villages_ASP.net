@@ -78,6 +78,24 @@ namespace Final_project.Utilizadores
         protected global::System.Web.UI.WebControls.DropDownList list_council;
 
         /// <summary>
+        /// latitude control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField latitude;
+
+        /// <summary>
+        /// longitude control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField longitude;
+
+        /// <summary>
         /// save_button control.
         /// </summary>
         /// <remarks>
