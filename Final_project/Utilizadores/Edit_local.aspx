@@ -8,8 +8,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <asp:Label ID="Label1" runat="server" Text="Criar Local"></asp:Label>
-
     Nome<asp:TextBox ID="text_name" runat="server"></asp:TextBox>
     <asp:RequiredFieldValidator ErrorMessage="Obrigatório" ControlToValidate="text_name" runat="server" Display="Dynamic" ForeColor="#CC0000" SetFocusOnError="true" />
 
